@@ -27,7 +27,7 @@ const NavComponent = (props) => {
           <Link to="/" className="nav-link">메인</Link>
           <Link to="/network" className="nav-link">네트워크</Link>
           {isLogin ?
-          (<Link className="nav-link" onClick={logoutHandler}>로그아웃</Link>) :
+          (<Link to="" className="nav-link" onClick={logoutHandler}>로그아웃</Link>) :
           (<Link to="/login" className="nav-link">로그인</Link>)}
           </Nav>
         </Navbar.Collapse>
