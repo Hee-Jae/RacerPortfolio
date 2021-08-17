@@ -6,11 +6,13 @@ import {
 } from 'react-bootstrap';
 
 import {Link} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/action';
 const NavComponent = (props) => {
 
   const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.auth);
+
   const logoutHandler = () => {
     dispatch(logout());
   }
@@ -24,8 +26,9 @@ const NavComponent = (props) => {
           <Nav className="me-auto">
           <Link to="/" className="nav-link">메인</Link>
           <Link to="/network" className="nav-link">네트워크</Link>
-          <Link className="nav-link" onClick={logoutHandler}>로그아웃</Link>
-          <Link to="/login" className="nav-link">로그인</Link>
+          {isLogin ?
+          (<Link className="nav-link" onClick={logoutHandler}>로그아웃</Link>) :
+          (<Link to="/login" className="nav-link">로그인</Link>)}
           </Nav>
         </Navbar.Collapse>
       </Container>
