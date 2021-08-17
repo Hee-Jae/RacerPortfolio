@@ -25,3 +25,4 @@ yarn-error.log*
 # server
 secret.py
 __pycache__
+migrations
