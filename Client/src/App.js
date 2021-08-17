@@ -1,4 +1,4 @@
-import {NavComponent, Main, Network, Login} from './portfolio/components';
+import {NavComponent, Main, Network, Login, Register} from './portfolio/components';
 import {BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import {Provider, useSelector} from "react-redux";
 import store from "./redux/store";
@@ -17,6 +17,9 @@ function App() {
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/register">
+          <Register />
         </Route>
       </BrowserRouter>
     </Provider>
