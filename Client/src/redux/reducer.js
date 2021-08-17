@@ -1,8 +1,9 @@
 const initState = {
-  auth: "로그인 안함"
+  auth: null
 }
 
 const Reducer = (state = initState, action) => {
+
   switch(action.type) {
     case "LOGIN":
       return {
@@ -11,7 +12,7 @@ const Reducer = (state = initState, action) => {
 
     case "LOGOUT":
       return {
-        auth: "로그인 안함"
+        auth: null
       }
 
     default:
