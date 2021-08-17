@@ -1,19 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-const Certificate = () => {
+const Profile = () => {
   const auth = useSelector((state) => state.auth);
   
 
   return(
     <div>
-      <h2> 자격증 </h2>
-      <p> 자격증 이름 </p>
-      <p> 발급기관 </p>
-      <p> 날짜 </p>
+      <img></img>
+      <p> 이름 </p>
+      <span> 한줄 소개 </span>
       <button> 수정 </button>
     </div>
   );
 }
 
-export default Certificate;
+export default Profile;
