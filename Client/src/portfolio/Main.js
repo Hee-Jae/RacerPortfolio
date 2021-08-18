@@ -1,21 +1,29 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {  } from 'redux-persist'
 import {Award, Certificate, Edu, Profile, Project} from './contents/all-contents'
-const Main = () => {
-  const auth = useSelector((state) => state.user.auth);
-  // const auth_info = window.localStorage.getItem(auth);
+import styled from 'styled-components';
 
-  console.log(auth);
+const MainStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 40%;
+  margin: 0 auto;
+`;
+
+
+const Main = () => {
+  const access_token = useSelector((state) => state.user.access_token);
+
+  console.log(access_token);
   return(
-    <div>
-      <h1> Main </h1>
+    <MainStyle>
       <Profile />
       <Edu />
       <Award />
       <Project />
       <Certificate />
-    </div>
+    </MainStyle>
   );
 }
 
