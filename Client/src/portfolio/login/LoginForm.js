@@ -21,7 +21,7 @@ const LoginForm = () => {
       });
 
       console.log(response);
-      dispatch(login(response.data.auth));
+      dispatch(login(response.data.access_token));
       history.push('/');
     } catch(error){
       console.log(error.response);

@@ -3,8 +3,9 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from db_connect import db
 from api.user_api import userbp
-from secret import secret_key
+from secret import SECRET_KEY, JWT_SECRET_KEY
 from oauth2client.contrib.flask_util import UserOAuth2
+from flask_jwt_extended import JWTManager
 import config
 
 def create_app():
@@ -17,7 +18,12 @@ def create_app():
     migrate.init_app(app, db, compare_type=True)
     from models import user, award, edu, project, certificate
     
-    app.secret_key = secret_key
+    app.secret_key = SECRET_KEY
+    
+    app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = config.expires_access
+    app.config['JWT_REFRESH_TOKEN_EXPIRES'] = config.expires_refresh
+    jwt = JWTManager(app)
     
     CORS(app)
         

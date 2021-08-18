@@ -1,5 +1,5 @@
 const initState = {
-  auth: {},
+  access_token: {},
   isLoggedIn: false
 }
 
@@ -9,14 +9,14 @@ const user = (state = initState, action) => {
     case "LOGIN":
       return {
         ...state,
-        auth: action.auth,
+        access_token: action.access_token,
         isLoggedIn: action.isLoggedIn
       }
 
     case "LOGOUT":
       return {
         ...state,
-        auth: action.auth,
+        access_token: action.access_token,
         isLoggedIn: action.isLoggedIn
       }
 
