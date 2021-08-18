@@ -8,8 +8,8 @@ class User(db.Model):
   email       = db.Column(db.String(45), nullable=False)
   password    = db.Column(db.String(256), nullable=False)
   name        = db.Column(db.String(45), nullable=False)
-  description = db.Column(db.Text())
-  image       = db.Column(db.Text())
+  description = db.Column(db.String(256))
+  image       = db.Column(db.String(500))
   type        = db.Column(db.Integer, nullable=False)
 
   def __init__(self, email, password, name, type):
