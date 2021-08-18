@@ -3,6 +3,8 @@ from models.user import User
 from db_connect import db
 from flask_bcrypt import Bcrypt
 from secret import bwt_key, bwt_algorithm
+import requests
+
 import jwt
 
 userbp = Blueprint('userbp', __name__)
@@ -49,3 +51,28 @@ def login():
     return make_response(jsonify({"auth":encoded_user}), 200)
   
   return make_response(jsonify({"error_message":"Login Failed"}), 400)
+
+
+@userbp.route('/google_login' , methods=['POST'])
+def google_login():
+  
+  token_info = request.get_json()
+  id_token = token_info['token']
+  token_request = requests.get(f"https://oauth2.googleapis.com/tokeninfo?id_token={id_token}")
+  token_json = token_request.json()
+  
+  name = token_json['family_name'] + token_json['given_name']
+  email = token_json['email']
+  type = 2
+  
+  user = User.query.filter_by(email=email, type=type).first()
+  if not user:
+    new_user = User(email=email, password='google', name=name, type=type)
+    db.session.add(new_user)
+    db.session.commit()
+    
+    user = new_user
+    
+  data_to_encode = {'id': user.id, 'name': user.name, 'email': user.email, 'type': user.type}
+  encoded_user = jwt.encode(data_to_encode, bwt_key, bwt_algorithm)
+  return make_response(jsonify({"auth":encoded_user}), 200)

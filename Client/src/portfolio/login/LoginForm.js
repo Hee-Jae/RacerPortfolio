@@ -10,7 +10,6 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
   const dispatch = useDispatch();
-  const isLogin = useSelector((state) => state.auth);
   const history = useHistory();
 
   const loginHandler = async () => {

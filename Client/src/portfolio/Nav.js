@@ -11,7 +11,7 @@ import { logout } from '../redux/action';
 const NavComponent = (props) => {
 
   const dispatch = useDispatch();
-  const isLogin = useSelector((state) => state.auth);
+  const isLogin = useSelector((state) => state.user.isLoggedIn);
 
   const logoutHandler = () => {
     dispatch(logout());

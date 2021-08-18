@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from db_connect import db
 from api.user_api import userbp
 from secret import secret_key
+from oauth2client.contrib.flask_util import UserOAuth2
 import config
 
 def create_app():
@@ -17,6 +18,7 @@ def create_app():
     from models import user, award, edu, project, certificate
     
     app.secret_key = secret_key
+    
     CORS(app)
         
     return app
