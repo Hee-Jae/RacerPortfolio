@@ -9,7 +9,7 @@ class Certificate(db.Model):
   name         = db.Column(db.String(45), nullable=False)
   agency       = db.Column(db.String(45), nullable=False)
   date         = db.Column(db.Date, nullable=False)
-  user_id      = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+  user_id      = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
   user_certificate  = relationship("User", backref=backref("certificates", order_by=id))
   
   def __init__(self, name, agency, date, user_id):

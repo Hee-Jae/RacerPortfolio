@@ -11,7 +11,7 @@ class Project(db.Model):
   startdate    = db.Column(db.Date, nullable=False)
   enddate      = db.Column(db.Date, nullable=False)
   url          = db.Column(db.String(256))
-  user_id      = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+  user_id      = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
   user_project  = relationship("User", backref=backref("projects", order_by=id))
   
   def __init__(self, name, description, startdate, enddate, user_id):

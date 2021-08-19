@@ -9,7 +9,7 @@ class Edu(db.Model):
   name     = db.Column(db.String(45), nullable=False)
   major    = db.Column(db.String(45), nullable=False)
   type     = db.Column(db.String(45), nullable=False)
-  user_id  = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+  user_id  = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
   user_edu  = relationship("User", backref=backref("edus", order_by=id))
   
   def __init__(self, name, major, type, user_id):
