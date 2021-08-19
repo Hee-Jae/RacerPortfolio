@@ -1,10 +1,10 @@
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import create_refresh_token, create_access_token, jwt_required, get_jwt_identity
+
 from models.user import User
 from db_connect import db
 from flask_bcrypt import Bcrypt
 import requests
-
 
 userbp = Blueprint('userbp', __name__)
 bcrypt = Bcrypt()

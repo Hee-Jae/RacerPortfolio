@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import {Award, Certificate, Edu, Profile, Project} from './contents/all-contents'
 import styled from 'styled-components';
+import axios from 'axios';
+import {BACKEND_URL} from '../env';
 
 const MainStyle = styled.div`
   display: flex;
@@ -11,18 +13,48 @@ const MainStyle = styled.div`
   margin: 0 auto;
 `;
 
-
 const Main = () => {
-  const access_token = useSelector((state) => state.user.access_token);
 
-  console.log(access_token);
+  const access_token = useSelector((state) => state.user.access_token);
+  const header = {
+    headers : {
+      'Content-Type' : "application/json",
+      'Authorization' : `Bearer ${access_token}`,
+    }
+  };
+
+  const [profileData, setProfileData] = useState([]);
+  const [eduData, setEduData] = useState([]);
+  const [awardData, setAwardData] = useState([]);
+  const [projectData, setProjectData] = useState([]);
+  const [certificateData, setCertificateData] = useState([]);
+  const [isFetched, setIsFetched] = useState(false);
+
+  useEffect( async () => {
+    const response = await axios.get(BACKEND_URL + '/posts', header);
+    
+    setProfileData(response.data.profile);
+    setEduData(response.data.edus);
+    setAwardData(response.data.awards);
+    setProjectData(response.data.projects);
+    setCertificateData(response.data.certificates);
+    setIsFetched(true);
+    console.log("Main Called !");
+  }, []);
+
+  
   return(
     <MainStyle>
-      <Profile />
-      <Edu />
-      <Award />
-      <Project />
-      <Certificate />
+      {isFetched ? 
+        <div>
+          <Profile profileData={profileData} />
+          <Edu eduData={eduData} setEduData={setEduData} />
+          <Award awardData={awardData} />
+          <Project projectData={projectData} />
+          <Certificate certificateData={certificateData} />
+        </div>:
+        <div> Loading... </div> 
+      }
     </MainStyle>
   );
 }

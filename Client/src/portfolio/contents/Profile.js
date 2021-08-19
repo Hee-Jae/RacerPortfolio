@@ -15,13 +15,13 @@ const ProfileStyle = styled.div`
   }
 `;
 
-const Profile = () => {
+const Profile = (props) => {
 
   return(
     <ProfileStyle>
       <img></img>
-      <p> 이름 </p>
-      <span> 한줄 소개 </span>
+      <p> {props.profileData.name} </p>
+      <span> {props.profileData.description} </span>
       <button> 수정 </button>
     </ProfileStyle>
   );

@@ -5,7 +5,6 @@ import axios from 'axios';
 import { BACKEND_URL } from '../env';
 import { useSelector } from 'react-redux';
 const Network = () => {
-
   const access_token = useSelector((state) => state.user.access_token);
   const header = {
     headers : {
@@ -15,9 +14,7 @@ const Network = () => {
   };
 
   useEffect( async () => {
-    
     const response = await axios.post(BACKEND_URL + '/network', '', header);
-    console.log(response);
   }, []);
 
   return(

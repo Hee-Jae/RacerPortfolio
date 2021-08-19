@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from db_connect import db
 from api.user_api import userbp
+from api.posts import posts
 from secret import SECRET_KEY, JWT_SECRET_KEY
 from oauth2client.contrib.flask_util import UserOAuth2
 from flask_jwt_extended import JWTManager
@@ -11,6 +12,7 @@ import config
 def create_app():
     app = Flask(__name__)
     app.register_blueprint(userbp)
+    app.register_blueprint(posts)
     app.config.from_object(config)
     db.init_app(app)
 
