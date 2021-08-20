@@ -80,7 +80,7 @@ const Certificate = (props) => {
   
   return(
     <CertificateStyle>
-      <h2> 프로젝트 </h2>
+      <h2> 자격증 </h2>
       {edit ? 
         <div>
           {props.certificateData.map(element => {
