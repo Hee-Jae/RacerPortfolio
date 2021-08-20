@@ -79,6 +79,7 @@ const Edu = (props) => {
             formName={element.name} 
             formMajor={element.major}
             formType={element.type}
+            formUserId={element.user_id}
             eduData={props.eduData}
             setEduData={props.setEduData}
             deleteList={deleteList}

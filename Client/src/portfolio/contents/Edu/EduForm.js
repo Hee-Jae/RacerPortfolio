@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 
 const EduFormStyle = styled.div`
@@ -17,21 +17,28 @@ const EduForm = (props) => {
 
   const changeNameHandler = (e) => {
     setEdu(e.target.value);
-    const newEduData = props.eduData.map(item => (item.id === props.formId ? {...item, name: e.target.value} : item));
-    props.setEduData(newEduData);
   };
 
   const changeMajorHandler = (e) => {
     setMajor(e.target.value);
-    const newEduData = props.eduData.map(item => (item.id === props.formId ? {...item, major: e.target.value} : item));
-    props.setEduData(newEduData);
   };
 
   const changeTypeHandler = (e) => {
     setType(e.target.value)
-    const newEduData = props.eduData.map(item => (item.id === props.formId ? {...item, type: e.target.value} : item));
-    props.setEduData(newEduData);
   };
+
+  useEffect(() => {
+    const newEduData = props.eduData.map(item => (item.id === props.formId ? 
+      {
+        id: props.formId,
+        name: edu,
+        major: major,
+        type: type,
+        user_id: props.formUserId
+      } : item));
+
+      props.setEduData(newEduData);
+    }, [edu, major, type]);
 
   const deleteHandler = () => {
     const newDeleteList = props.deleteList.concat(props.formId);

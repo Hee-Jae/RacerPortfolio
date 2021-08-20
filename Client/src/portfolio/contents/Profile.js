@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from "axios";
@@ -68,7 +68,6 @@ const Profile = (props) => {
   };
 
   const editCompleteHandler = async () => {
-    // console.log(props.profileData);
     const response = await axios.put(BACKEND_URL + '/profiles', props.profileData, header);
     console.log(response.data);
     props.setProfileData(response.data);
@@ -77,22 +76,27 @@ const Profile = (props) => {
 
   const changeNameHandler = (e) => {
     setUserName(e.target.value);
-    const newProfileData = {...props.profileData, name: e.target.value};
-    props.setProfileData(newProfileData);
   }
 
   const changeImageHandler = (e) => {
     setImage(e.target.value);
-    const newProfileData = {...props.profileData, image: e.target.value};
-    props.setProfileData(newProfileData);
   }
 
   const changeDescriptionHandler = (e)  => {
     setDescription(e.target.value);
-    const newProfileData = {...props.profileData, description: e.target.value};
-    props.setProfileData(newProfileData);
-    // console.log(props.profileData);
   }
+
+  useEffect(() => {
+    const newProfileData = {
+        id: props.formId,
+        name: userName,
+        description: description,
+        image: image,
+        user_id: props.formUserId
+      };
+
+      props.setProfileData(newProfileData);
+    }, [userName, description, image]);
   
   return(
     <ProfileStyle>
