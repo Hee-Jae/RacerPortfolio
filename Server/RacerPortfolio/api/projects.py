@@ -28,7 +28,6 @@ def put_project():
   user_info = get_jwt_identity()  
   projects = Project.query.filter_by(user_id = user_info['id']).all()
   json_projects = [project.as_dict() for project in projects]
-  
   return jsonify(json_projects), 200
 
 

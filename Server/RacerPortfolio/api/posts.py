@@ -36,5 +36,5 @@ def get_portfolio():
     'projects': json_projects,
     'certificates': json_certificates
   }
-  
+    
   return jsonify(response_data), 200

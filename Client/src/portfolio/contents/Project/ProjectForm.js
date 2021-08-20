@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
 
 const ProjectFormStyle = styled.div`
   border: 1px solid green;
@@ -40,14 +41,14 @@ const ProjectForm = (props) => {
   };
 
   const changeStartdateHandler = (date) => {
-    setStartdate(date)
+    setStartdate(moment(date).format('YYYY-MM-DD'));
     const newProjectData = props.projectData.map(item => (item.id === props.formId ? {...item, startdate: date} : item));
     props.setProjectData(newProjectData);
   };
 
   const changeEnddateHandler = (date) => {
-    setEnddate(date)
-    console.log(enddate.toDateString());
+    setEnddate(moment(date).format('YYYY-MM-DD'));
+    console.log(enddate);
     const newProjectData = props.projectData.map(item => (item.id === props.formId ? {...item, enddate: date} : item));
     props.setProjectData(newProjectData);
   };
@@ -65,6 +66,14 @@ const ProjectForm = (props) => {
     props.setProjectData(newProjectData);
   };
 
+  const formattedStartDate = (sdate)=> {
+    if(typeof sdate === 'string'){
+      const dateArr = sdate.split('-');
+      return new Date(dateArr[0], dateArr[1]-1, dateArr[2]);
+    }
+    else return sdate;
+  }
+
   return(
     <ProjectFormStyle>
       <InnerFormStyle>
@@ -76,10 +85,10 @@ const ProjectForm = (props) => {
       <InnerFormStyle>
         <p>프로젝트 기간</p>
         <DatePickerStyle>
-          <DatePicker dateFormat="yyyy-MM-dd" selected={startdate} onChange={changeStartdateHandler} />
+          <DatePicker dateFormat="yyyy-MM-dd" selected={formattedStartDate(startdate)} onChange={changeStartdateHandler} />
         </DatePickerStyle> ~
         <DatePickerStyle>
-          <DatePicker dateFormat="yyyy-MM-dd" selected={enddate} onChange={changeEnddateHandler} />
+          <DatePicker dateFormat="yyyy-MM-dd" selected={formattedStartDate(enddate)} onChange={changeEnddateHandler} />
         </DatePickerStyle>
       </InnerFormStyle>
       <InnerFormStyle>

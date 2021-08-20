@@ -25,6 +25,10 @@ const ProjectButtonWrapper = styled.div`
 
 const Project = (props) => {
   
+  useEffect(() => {
+    console.log(props.projectData);
+  }, [])
+
   const [edit, setEdit] = useState(false);
   const [copyProjectData, setCopyProjectData] = useState(props.projectData);
   const [newIndex, setNewIndex] = useState(0);
@@ -85,8 +89,8 @@ const Project = (props) => {
             formId={element.id}
             formName={element.name} 
             formDescription={element.description}
-            formStartdate={new Date(element.startdate)}
-            formEnddate={new Date(element.enddate)}
+            formStartdate={element.startdate}
+            formEnddate={element.enddate}
             formUrl={element.url}
             projectData={props.projectData}
             setProjectData={props.setProjectData}
@@ -107,8 +111,8 @@ const Project = (props) => {
             projectId={element.id}
             projectName={element.name} 
             projectDescription={element.description}
-            projectStartdate={new Date(element.startdate)}
-            projectEnddate={new Date(element.enddate)}
+            projectStartdate={element.startdate}
+            projectEnddate={element.enddate}
             projectUrl={element.url} /> );
           })}
           <ProjectButtonWrapper>
