@@ -22,9 +22,9 @@ const InnerFormStyle = styled.div`
 
 const CertificateForm = (props) => {
 
-  const [certificate, setCertificate] = useState(props.certificateData.filter(item => (item.id === props.formId))[0].name);
-  const [agency, setAgency] = useState(props.certificateData.filter(item => (item.id === props.formId))[0].agency);
-  const [date, setDate] = useState(props.certificateData.filter(item => (item.id === props.formId))[0].date);
+  const [certificate, setCertificate] = useState(props.formName);
+  const [agency, setAgency] = useState(props.formAgency);
+  const [date, setDate] = useState(props.formDate);
 
   const changeNameHandler = (e) => {
     setCertificate(e.target.value);
