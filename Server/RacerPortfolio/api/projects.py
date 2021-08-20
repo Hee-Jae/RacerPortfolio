@@ -13,7 +13,7 @@ def put_project():
   
   for project in project_data:
     if project['id'] <= 0 :
-      newProject = Project(project['name'], project['description'], project['startdate'][:10], project['enddate'][:10], project['user_id'])
+      newProject = Project(project['name'], project['description'], project['startdate'][:10], project['enddate'][:10], project['url'], project['user_id'])
       db.session.add(newProject)
       db.session.commit()
     else: 
@@ -37,6 +37,7 @@ def delete_project():
   
   delete_list = request.get_json()
   for item in delete_list:
+    print(item)
     target_project = Project.query.filter_by(id=item).first()
     db.session.delete(target_project)
     db.session.commit()

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -30,34 +30,38 @@ const ProjectForm = (props) => {
 
   const changeNameHandler = (e) => {
     setProject(e.target.value);
-    const newProjectData = props.projectData.map(item => (item.id === props.formId ? {...item, name: e.target.value} : item));
-    props.setProjectData(newProjectData);
   };
 
   const changeDescriptionHandler = (e) => {
     setDescription(e.target.value);
-    const newProjectData = props.projectData.map(item => (item.id === props.formId ? {...item, description: e.target.value} : item));
-    props.setProjectData(newProjectData);
   };
 
   const changeStartdateHandler = (date) => {
     setStartdate(moment(date).format('YYYY-MM-DD'));
-    const newProjectData = props.projectData.map(item => (item.id === props.formId ? {...item, startdate: date} : item));
-    props.setProjectData(newProjectData);
   };
 
   const changeEnddateHandler = (date) => {
     setEnddate(moment(date).format('YYYY-MM-DD'));
-    console.log(enddate);
-    const newProjectData = props.projectData.map(item => (item.id === props.formId ? {...item, enddate: date} : item));
-    props.setProjectData(newProjectData);
   };
 
   const changeUrlHandler = (e) => {
-    setUrl(e.target.value)
-    const newProjectData = props.projectData.map(item => (item.id === props.formId ? {...item, url: e.target.value} : item));
-    props.setProjectData(newProjectData);
+    setUrl(e.target.value);
   };
+
+  useEffect(() => {
+    const newProjectData = props.projectData.map(item => (item.id === props.formId ? 
+      {
+        id: props.formId,
+        name: project,
+        description: description,
+        startdate: startdate,
+        enddate: enddate,
+        url: url,
+        user_id: props.formUserId
+      } : item));
+
+    props.setProjectData(newProjectData);
+  }, [project, description, startdate, enddate, url]);
 
   const deleteHandler = () => {
     const newDeleteList = props.deleteList.concat(props.formId);

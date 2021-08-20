@@ -5,6 +5,7 @@ import axios from "axios";
 import ProjectContents from './ProjectContents';
 import ProjectForm from './ProjectForm';
 import { BACKEND_URL } from '../../../env';
+import moment from 'moment';
 
 const ProjectStyle = styled.div`
   border: solid 3px grey;
@@ -69,8 +70,8 @@ const Project = (props) => {
     const newProjectData = props.projectData.concat({
       id: newIndex, name: '',
       description: '',
-      startdate: new Date(),
-      enddate: new Date(),
+      startdate: moment(new Date()).format('YYYY-MM-DD'),
+      enddate: moment(new Date()).format('YYYY-MM-DD'),
       url: '',
       user_id: props.userId
     });
@@ -92,6 +93,7 @@ const Project = (props) => {
             formStartdate={element.startdate}
             formEnddate={element.enddate}
             formUrl={element.url}
+            formUserId={element.user_id}
             projectData={props.projectData}
             setProjectData={props.setProjectData}
             deleteList={deleteList}
