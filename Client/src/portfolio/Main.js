@@ -52,7 +52,7 @@ const Main = () => {
           <Edu eduData={eduData} setEduData={setEduData} userId={userId} />
           <Award awardData={awardData} setAwardData={setAwardData} userId={userId} />
           <Project projectData={projectData} setProjectData={setProjectData} userId={userId} />
-          <Certificate certificateData={certificateData} />
+          <Certificate certificateData={certificateData} setCertificateData={setCertificateData} userId={userId}/>
         </div>:
         <div> Loading... </div> 
       }

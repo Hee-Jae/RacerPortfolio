@@ -9,6 +9,7 @@ from api.edus import edus
 from api.awards import awards
 from api.profile import profiles
 from api.projects import projects
+from api.certificates import certificates
 
 from secret import SECRET_KEY, JWT_SECRET_KEY
 from oauth2client.contrib.flask_util import UserOAuth2
@@ -23,6 +24,7 @@ def create_app():
     app.register_blueprint(awards)
     app.register_blueprint(profiles)
     app.register_blueprint(projects)
+    app.register_blueprint(certificates)
     
     app.config.from_object(config)
     db.init_app(app)
