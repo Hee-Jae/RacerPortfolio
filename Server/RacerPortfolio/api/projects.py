@@ -37,7 +37,6 @@ def delete_project():
   
   delete_list = request.get_json()
   for item in delete_list:
-    print(item)
     target_project = Project.query.filter_by(id=item).first()
     db.session.delete(target_project)
     db.session.commit()
