@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import SearchBar from './SearchBar';
 import Posts from './Posts';
 import axios from 'axios';
-import { BACKEND_URL } from '../env';
+import { BACKEND_URL } from '../utils/env';
 import { useSelector } from 'react-redux';
 const Network = () => {
   const access_token = useSelector((state) => state.user.access_token);

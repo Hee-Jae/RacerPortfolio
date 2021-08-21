@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {GoogleLogin} from 'react-google-login';
 import { google_oauth2_client_id } from './oauth2';
 import axios from 'axios';
-import { BACKEND_URL } from '../../env';
+import { BACKEND_URL } from '../../utils/env';
 import {useDispatch, useSelector} from "react-redux";
 import { useHistory } from "react-router-dom";
 import {login} from "../../redux/action";

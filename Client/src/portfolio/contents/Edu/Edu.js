@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import axios from "axios";
 import EduContents from './EduContents';
 import EduForm from './EduForm';
-import { BACKEND_URL } from '../../../env';
+import { BACKEND_URL } from '../../../utils/env';
 
 const EduStyle = styled.div`
   border: solid 3px grey;

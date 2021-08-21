@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import { BACKEND_URL } from "../../env";
+import { BACKEND_URL } from "../../utils/env";
 import { useHistory } from "react-router-dom";
 
 

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import {Award, Certificate, Edu, Profile, Project} from './contents/all-contents'
 import styled from 'styled-components';
 import axios from 'axios';
-import {BACKEND_URL} from '../env';
+import {BACKEND_URL} from '../utils/env';
 
 const MainStyle = styled.div`
   display: flex;
