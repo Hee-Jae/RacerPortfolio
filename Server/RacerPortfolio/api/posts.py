@@ -17,12 +17,13 @@ posts = Blueprint('posts', __name__, url_prefix='/posts')
 @posts.route('', methods=['GET'])
 @jwt_required()
 def get_portfolio():
-  user_info = get_jwt_identity()
-  edus = Edu.query.filter_by(user_id = user_info['id']).all()
-  awards = Award.query.filter_by(user_id = user_info['id']).all()
-  projects = Project.query.filter_by(user_id = user_info['id']).all()
-  certificates = Certificate.query.filter_by(user_id = user_info['id']).all()
-  profiles = User.query.filter_by(id = user_info['id']).first()
+  # user_info = get_jwt_identity()
+  requested_id = int(request.args.get('user'))
+  edus = Edu.query.filter_by(user_id = requested_id).all()
+  awards = Award.query.filter_by(user_id = requested_id).all()
+  projects = Project.query.filter_by(user_id = requested_id).all()
+  certificates = Certificate.query.filter_by(user_id = requested_id).all()
+  profiles = User.query.filter_by(id = requested_id).first()
   
   if profiles.image:
     profile_image = Image.open(os.path.join(current_app.config['UPLOAD_DIR'], 'media', profiles.image))
@@ -38,7 +39,7 @@ def get_portfolio():
   json_certificates = [certificate.as_dict() for certificate in certificates]
   
   response_data = {
-    'user_id': user_info['id'],
+    'user_id': requested_id,
     'profile': {
       'name': profiles.name,
       'description': profiles.description,

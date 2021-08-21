@@ -31,6 +31,7 @@ const Edu = (props) => {
   const [deleteList, setDeleteList] = useState([]);
 
   const access_token = useSelector((state) => state.user.access_token);
+  const user_id = useSelector((state) => state.user.user_id);
 
   const header = {
     headers : {
@@ -101,7 +102,7 @@ const Edu = (props) => {
             eduType={element.type} /> );
           })}
           <EduButtonWrapper>
-            <button onClick={editTriggerHandler}> 수정 </button>
+            {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
           </EduButtonWrapper>
         </div>
       }

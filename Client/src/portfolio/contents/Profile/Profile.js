@@ -46,6 +46,7 @@ const Profile = (props) => {
   const [description, setDescription] = useState(props.profileData.description);
 
   const access_token = useSelector((state) => state.user.access_token);
+  const user_id = useSelector((state) => state.user.user_id);
 
   const header = {
     headers : {
@@ -88,10 +89,6 @@ const Profile = (props) => {
 
   const changeImageHandler = (e) => {
     setImage(e.target.files[0]);
-  }
-
-  const deleteImageHandler = (e) => {
-    setImage(null);
   }
 
   const changeDescriptionHandler = (e)  => {
@@ -144,7 +141,7 @@ const Profile = (props) => {
             <p> {props.profileData.description} </p>
           </ProfileContentsStyle>
           <ProfileButtonWrapper>
-            <button onClick={editTriggerHandler}> 수정 </button>
+            {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
           </ProfileButtonWrapper>
         </div>
       }

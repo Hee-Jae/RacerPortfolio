@@ -15,7 +15,7 @@ const GoogleLoginCompnent = (props) => {
 
   useEffect(() => {
     if(isLogin){
-      history.push('/');
+      history.push('/main');
     }
   }, [])
 
@@ -23,8 +23,8 @@ const GoogleLoginCompnent = (props) => {
     const token = response.tokenObj.id_token;
     const loginRes = await axios.post(BACKEND_URL + '/google_login', {token: token});
     
-    dispatch(login(loginRes.data.auth));
-    history.push('/');
+    dispatch(login(loginRes.data.access_token, loginRes.data.refresh_token, loginRes.data.user_id));
+    history.push('/main');
   };
 
   const onFailureHandler = (response) => {
