@@ -49,7 +49,7 @@ const Profile = (props) => {
 
   const header = {
     headers : {
-      'Content-Type' : "application/json",
+      'Content-Type' : "multipart/form-data",
       'Authorization' : `Bearer ${access_token}`,
     }
   };
@@ -67,9 +67,17 @@ const Profile = (props) => {
     setEdit(false);
   };
 
-  const editCompleteHandler = async () => {
-    const response = await axios.put(BACKEND_URL + '/profiles', props.profileData, header);
-    console.log(response.data);
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    let fileToUpload = image;
+    const formData = new FormData();
+
+    formData.append("image", fileToUpload);
+    formData.append("name", userName);
+    formData.append("description", description);
+
+    const response = await axios.post(BACKEND_URL + '/profiles', formData, header);
+
     props.setProfileData(response.data);
     setEdit(false);
   };
@@ -79,7 +87,11 @@ const Profile = (props) => {
   }
 
   const changeImageHandler = (e) => {
-    setImage(e.target.value);
+    setImage(e.target.files[0]);
+  }
+
+  const deleteImageHandler = (e) => {
+    setImage(null);
   }
 
   const changeDescriptionHandler = (e)  => {
@@ -103,26 +115,31 @@ const Profile = (props) => {
       <h2> 프로필 </h2>
       {edit ? 
         <div>
-          <ProfileFormStyle>
-            <div>
-              <input type="file" placeholder="이미지" value={image} onChange={changeImageHandler} />
-            </div>
-            <div>
-              <input type="text" placeholder="이름" value={userName} onChange={changeNameHandler} />
-            </div>
-            <div>
-              <input type="text" placeholder="한줄소개" value={description} onChange={changeDescriptionHandler} />
-            </div>
-          </ProfileFormStyle>
+            <form onSubmit={submitHandler} encType="multipart/form-data">
+              <ProfileFormStyle>
+                <div>
+                  <input type="file" placeholder="이미지" onChange={changeImageHandler} />
+                </div>
+                <div>
+                  <input type="text" placeholder="이름" value={userName} onChange={changeNameHandler} />
+                </div>
+                <div>
+                  <input type="text" placeholder="한줄소개" value={description} onChange={changeDescriptionHandler} />
+                </div>
+              </ProfileFormStyle>
+              
+              <ProfileButtonWrapper>
+                <button type="submit"> 완료 </button>
+                <button onClick={editCancelHandler}> 취소 </button>
+              </ProfileButtonWrapper>
+            </form>
           
-          <ProfileButtonWrapper>
-            <button onClick={editCompleteHandler}> 완료 </button>
-            <button onClick={editCancelHandler}> 취소 </button>
-          </ProfileButtonWrapper>
         </div> :
         <div>
           <ProfileContentsStyle>
-            <img src={props.profileData.image} width='300px' alt='프로필사진'/>
+            {image === null ?
+            <div> 프로필 사진이 없어요 </div> :
+            <img src={`data:image/png;base64,${props.profileData.image}`} width='100px' alt='프로필사진'/> }
             <p> {props.profileData.name} </p>
             <p> {props.profileData.description} </p>
           </ProfileContentsStyle>
