@@ -40,7 +40,6 @@ const Main = () => {
     setProjectData(response.data.projects);
     setCertificateData(response.data.certificates);
     setIsFetched(true);
-    console.log("Main Called !");
   }, []);
 
   

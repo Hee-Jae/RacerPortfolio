@@ -20,11 +20,10 @@ const LoginForm = () => {
       type: 1
       });
 
-      console.log(response.data);
       dispatch(login(response.data.access_token));
       history.push('/');
     } catch(error){
-      console.log(error.response);
+      alert(error.response);
     }
   };
 

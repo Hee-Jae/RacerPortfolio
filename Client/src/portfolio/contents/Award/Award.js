@@ -54,7 +54,6 @@ const Award = (props) => {
   const editCompleteHandler = async () => {
     const deleteResponse = await axios.post(BACKEND_URL + '/awards/delete', deleteList.filter(item => item > 0), header);
     const response = await axios.put(BACKEND_URL + '/awards', props.awardData, header);
-    console.log(response.data);
     props.setAwardData(response.data);
     setEdit(false);
     setNewIndex(0);

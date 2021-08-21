@@ -25,10 +25,6 @@ const CertificateButtonWrapper = styled.div`
 `;
 
 const Certificate = (props) => {
-  
-  useEffect(() => {
-    console.log(props.certificateData);
-  }, [])
 
   const [edit, setEdit] = useState(false);
   const [copyCertificateData, setCopyCertificateData] = useState(props.certificateData);
@@ -59,7 +55,6 @@ const Certificate = (props) => {
   const editCompleteHandler = async () => {
     const deleteResponse = await axios.post(BACKEND_URL + '/certificates/delete', deleteList.filter(item => item > 0), header);
     const response = await axios.put(BACKEND_URL + '/certificates', props.certificateData, header);
-    console.log(response.data);
     props.setCertificateData(response.data);
     setEdit(false);
     setNewIndex(0);

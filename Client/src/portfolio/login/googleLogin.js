@@ -20,18 +20,15 @@ const GoogleLoginCompnent = (props) => {
   }, [])
 
   const onSuccessHandler = async (response) => {
-    console.log("Success!");
     const token = response.tokenObj.id_token;
     const loginRes = await axios.post(BACKEND_URL + '/google_login', {token: token});
     
-    console.log(loginRes);
     dispatch(login(loginRes.data.auth));
     history.push('/');
   };
 
   const onFailureHandler = (response) => {
     console.log("Failure!");
-    console.log(response);
   };
   
   return (

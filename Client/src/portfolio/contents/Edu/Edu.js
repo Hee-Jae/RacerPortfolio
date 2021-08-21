@@ -54,7 +54,6 @@ const Edu = (props) => {
   const editCompleteHandler = async () => {
     const deleteResponse = await axios.post(BACKEND_URL + '/edus/delete', deleteList.filter(item => item > 0), header);
     const response = await axios.put(BACKEND_URL + '/edus', props.eduData, header);
-    console.log(response.data);
     props.setEduData(response.data);
     setEdit(false);
     setNewIndex(0);

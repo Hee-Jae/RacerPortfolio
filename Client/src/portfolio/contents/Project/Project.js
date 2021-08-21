@@ -25,10 +25,6 @@ const ProjectButtonWrapper = styled.div`
 `;
 
 const Project = (props) => {
-  
-  useEffect(() => {
-    console.log(props.projectData);
-  }, [])
 
   const [edit, setEdit] = useState(false);
   const [copyProjectData, setCopyProjectData] = useState(props.projectData);
@@ -59,7 +55,6 @@ const Project = (props) => {
   const editCompleteHandler = async () => {
     const deleteResponse = await axios.post(BACKEND_URL + '/projects/delete', deleteList.filter(item => item > 0), header);
     const response = await axios.put(BACKEND_URL + '/projects', props.projectData, header);
-    console.log(response.data);
     props.setProjectData(response.data);
     setEdit(false);
     setNewIndex(0);
