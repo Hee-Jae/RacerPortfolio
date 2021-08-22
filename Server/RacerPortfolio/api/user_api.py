@@ -20,39 +20,39 @@ def register():
   email = request.json.get('email', None)
   password = request.json.get('password', None)
   name = request.json.get('name', None)
-  type = request.json.get('type', None)
+  user_type = request.json.get('user_type', None)
   
-  if email == None or password == None or name == None or type == None:
-    return jsonify("fail")
+  if email == None or password == None or name == None or user_type == None:
+    return jsonify(message = "invalid parameter"), 400
   
-  user = User.query.filter_by(email=email, type=type).first()
+  user = User.query.filter_by(email=email, user_type=user_type).first()
   if user:
-    return jsonify("fail")
+    return jsonify(message = "already exist"), 400
 
   hashed_password = bcrypt.generate_password_hash(password).decode()
-  new_user = User(email=email, password=hashed_password, name=name, type=type)
+  new_user = User(email=email, password=hashed_password, name=name, user_type=user_type)
   db.session.add(new_user)
   db.session.commit()
   
-  return jsonify("success")
+  return jsonify(message = "register success"), 200
 
 @userbp.route('/login', methods=['POST'])
 def login():
   email = request.json.get('email', None)
-  type = request.json.get('type', None)
+  user_type = request.json.get('user_type', None)
   password = request.json.get('password', None)
   
-  if email == None or type == None or password == None:
+  if email == None or user_type == None or password == None:
     return jsonify({"error_message":"User Not Found"}), 400
   
-  type = int(type)
-  user = User.query.filter_by(email=email, type=type).first()
+  user_type = int(user_type)
+  user = User.query.filter_by(email=email, user_type=user_type).first()
   
   if not user:
     return jsonify({"error_message":"User Not Found"}), 400
 
   if bcrypt.check_password_hash(user.password, password):
-    user_info = {'id': user.id, 'name': user.name, 'email': user.email, 'type': user.type}
+    user_info = {'id': user.id, 'name': user.name, 'email': user.email, 'user_type': user.user_type}
     access_token = create_access_token(identity=user_info)
     refresh_token = create_refresh_token(identity=user_info)
     return jsonify(access_token=access_token, refresh_token=refresh_token, user_id=user.id), 200
@@ -70,17 +70,17 @@ def google_login():
   
   name = token_json['family_name'] + token_json['given_name']
   email = token_json['email']
-  type = 2
+  user_type = 2
   
-  user = User.query.filter_by(email=email, type=type).first()
+  user = User.query.filter_by(email=email, user_type=user_type).first()
   if not user:
-    new_user = User(email=email, password='google', name=name, type=type)
+    new_user = User(email=email, password='google', name=name, user_type=user_type)
     db.session.add(new_user)
     db.session.commit()
     
     user = new_user
     
-  user_info = {'id': user.id, 'name': user.name, 'email': user.email, 'type': user.type}
+  user_info = {'id': user.id, 'name': user.name, 'email': user.email, 'user_type': user.user_type}
   access_token = create_access_token(identity=user_info)
   refresh_token = create_refresh_token(identity=user_info)
-  return jsonify(access_token=access_token, refresh_token=refresh_token), 200
+  return jsonify(access_token=access_token, refresh_token=refresh_token, user_id=user.id), 200
