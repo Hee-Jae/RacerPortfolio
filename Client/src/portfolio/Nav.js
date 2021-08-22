@@ -7,7 +7,7 @@ import {
 
 import {Link} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../redux/action';
+import { logout } from 'redux/action';
 const NavComponent = (props) => {
 
   const dispatch = useDispatch();

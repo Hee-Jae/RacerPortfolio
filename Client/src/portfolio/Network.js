@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import SearchBar from './SearchBar';
 import axios from 'axios';
-import { BACKEND_URL } from '../utils/env';
+import { BACKEND_URL } from 'utils/env';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
