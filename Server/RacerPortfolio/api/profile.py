@@ -4,9 +4,9 @@ from models.user import User
 from db_connect import db
 from PIL import Image
 from base64 import b64encode
+from io import BytesIO
+from json import dumps
 import os
-import io
-import json
 
 profiles = Blueprint('profiles', __name__, url_prefix='/profiles')
 
@@ -18,7 +18,7 @@ def put_profile():
   
   if 'image' in request.files:
     image_file = request.files['image'].read()
-    image_save = Image.open(io.BytesIO(image_file))
+    image_save = Image.open(BytesIO(image_file))
     filename = str(user_info['id']) + '.' + image_save.format
     image_save.save(os.path.join(current_app.config['UPLOAD_DIR'], 'media', filename))
     
@@ -30,7 +30,7 @@ def put_profile():
   target_profile = User.query.filter_by(id = user_info['id']).first()
   if target_profile.image:
     profile_image = Image.open(os.path.join(current_app.config['UPLOAD_DIR'], 'media', target_profile.image))
-    buffered = io.BytesIO()
+    buffered = BytesIO()
     profile_image.save(buffered, format=profile_image.format)
     profile_image_bytes = buffered.getvalue()
     profile_image_base64 = b64encode(profile_image_bytes)
@@ -38,8 +38,9 @@ def put_profile():
   
   target_profile.name = request.form['name']
   target_profile.description = request.form['description']
+  db.session.commit()
   
-  json_profiles = json.dumps({
+  json_profiles = dumps({
     'name': target_profile.name,
     'description': target_profile.description,
     'image': profile_image_str if target_profile.image else target_profile.image
