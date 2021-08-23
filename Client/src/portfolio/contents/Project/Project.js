@@ -56,7 +56,7 @@ const Project = (props) => {
 
   const editCompleteHandler = async () => {
     if(!projectDataValidation(projectData)){
-      alert("모든 항목을 다 채워주세요.");
+      alert("프로젝트 주소를 제외한 모든 항목을 다 채워주세요.");
     } else {
       try{
         const deleteResponse = await axios.post(BACKEND_URL + '/projects/delete', deleteList.filter(item => item > 0), header(access_token));
