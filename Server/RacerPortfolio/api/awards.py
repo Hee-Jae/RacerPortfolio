@@ -10,7 +10,6 @@ awards = Blueprint('awards', __name__, url_prefix='/awards')
 def put_award():
   
   award_data = request.get_json()  
-  
   for award in award_data:
     if award['id'] <= 0 :
       newAward = Award(award['name'], award['description'], award['user_id'])

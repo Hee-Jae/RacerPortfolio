@@ -34,7 +34,7 @@ def create_app():
 
     migrate = Migrate()
     migrate.init_app(app, db, compare_type=True)
-    from models import user, award, edu, project, certificate
+    from models import user, award, edu, project, certificate, token
     
     app.config['UPLOAD_DIR'] = os.getcwd()
     
@@ -43,6 +43,7 @@ def create_app():
     app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = config.expires_access
     app.config['JWT_REFRESH_TOKEN_EXPIRES'] = config.expires_refresh
+
     jwt = JWTManager(app)
     
     CORS(app)
