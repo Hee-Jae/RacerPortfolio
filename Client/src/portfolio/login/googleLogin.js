@@ -11,7 +11,7 @@ const GoogleLoginComponent = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const isLogin = useSelector((state) => state.user.isLoggedIn);
+  const isLogin = useSelector((state) => state.user.isLogined);
   const user_id = useSelector((state) => state.user.user_id);
 
   useEffect(() => {
