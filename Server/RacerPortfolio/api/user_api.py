@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import create_refresh_token, create_access_token, jwt_required, get_jwt_identity
 from flask_jwt_extended.utils import decode_token
@@ -7,6 +6,7 @@ from models.user import User
 from models.token import Token
 from db_connect import db
 from flask_bcrypt import Bcrypt
+from utils.validation import validate_email, validate_name, validate_password
 import requests
 
 userbp = Blueprint('userbp', __name__)
@@ -29,6 +29,15 @@ def register():
   if email == None or password == None or password_check == None or name == None or user_type == None:
     return jsonify(message = "invalid parameter"), 400
   
+  if not validate_email(email):
+    return jsonify(message = "invalid email"), 400
+  
+  if not validate_password(password):
+    return jsonify(message = "invalid password"), 400
+  
+  if not validate_name(name):
+    return jsonify(message = "invalid name"), 400
+  
   if password != password_check:
     return jsonify(message = "password check is not correct"), 400
   
@@ -50,16 +59,22 @@ def login():
   password = request.json.get('password', None)
   
   if email == None or user_type == None or password == None:
-    return jsonify({"error_message":"User Not Found"}), 400
+    return jsonify(message = "User Not Found"), 400
+  
+  if not validate_email(email):
+    return jsonify(message = "invalid email"), 400
+  
+  if not validate_password(password):
+    return jsonify(message = "invalid password"), 400
   
   user_type = int(user_type)
   user = User.query.filter_by(email=email, user_type=user_type).first()
   
   if not user:
-    return jsonify({"error_message":"User Not Found"}), 400
+    return jsonify(message = "User Not Found"), 400
 
   if not bcrypt.check_password_hash(user.password, password):
-    return jsonify({"error_message":"Login Failed"}), 400
+    return jsonify(message = "Login Failed"), 400
     
   user_info = {'id': user.id, 'name': user.name, 'email': user.email, 'user_type': user.user_type}
   access_token = create_access_token(identity=user_info)
