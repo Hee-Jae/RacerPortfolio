@@ -26,18 +26,6 @@ const CertificateForm = (props) => {
   const [agency, setAgency] = useState(props.formAgency);
   const [date, setDate] = useState(props.formDate);
 
-  const changeNameHandler = (e) => {
-    setCertificate(e.target.value);
-  };
-
-  const changeAgencyHandler = (e) => {
-    setAgency(e.target.value);
-  };
-
-  const changeDateHandler = (date) => {
-    setDate(moment(date).format('YYYY-MM-DD'));
-  };
-
   useEffect(() => {
     const newCertificateData = props.certificateData.map(item => (item.id === props.formId ? 
       {
@@ -69,15 +57,15 @@ const CertificateForm = (props) => {
   return(
     <CertificateFormStyle>
       <InnerFormStyle>
-        <input type="text" placeholder="자격증" value={certificate} onChange={changeNameHandler} />
+        <input type="text" placeholder="자격증" value={certificate} onChange={e => setCertificate(e.target.value)} />
       </InnerFormStyle>
       <InnerFormStyle>
-        <input type="text" placeholder="발급 기관" value={agency} onChange={changeAgencyHandler} />
+        <input type="text" placeholder="발급 기관" value={agency} onChange={e => setAgency(e.target.value)} />
       </InnerFormStyle>
       <InnerFormStyle>
         <p>취득 날짜</p>
         <DatePickerStyle>
-          <DatePicker dateFormat="yyyy-MM-dd" selected={formattedDate(date)} onChange={changeDateHandler} />
+          <DatePicker dateFormat="yyyy-MM-dd" selected={formattedDate(date)} onChange={date => setDate(moment(date).format('YYYY-MM-DD'))} />
         </DatePickerStyle>
       </InnerFormStyle>
       <button onClick={deleteHandler}> 삭제 </button>
