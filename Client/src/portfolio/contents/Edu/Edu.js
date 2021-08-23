@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import axios from "axios";
 import EduContents from 'portfolio/contents/Edu/EduContents';
 import EduForm from 'portfolio/contents/Edu/EduForm';
@@ -10,23 +9,9 @@ import { useDispatch } from 'react-redux';
 import { logout, refresh } from 'redux/action';
 import { useHistory } from 'react-router';
 import { eduDataValidation } from 'utils/validation';
-
-const EduStyle = styled.div`
-  border: solid 3px grey;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  margin: 15px;
-
-  button{
-    width: 30%;
-    margin: 0 auto;
-  }
-`;
-
-const EduButtonWrapper = styled.div`
-  margin-top: 20px;
-`
+import { ContentsStyle, ContentsButtonWrapper} from 'portfolio/contents/ContentsStyle';
+import { BsPencilSquare, BsPlusSquare, BsCheckBox} from "react-icons/bs";
+import {CgCloseR} from "react-icons/cg";
 
 const Edu = (props) => {
   
@@ -101,7 +86,7 @@ const Edu = (props) => {
   };
   
   return(
-    <EduStyle>
+    <ContentsStyle>
       <h2> 학력 </h2>
       {edit ? 
         <div>
@@ -119,11 +104,11 @@ const Edu = (props) => {
             setDeleteList={setDeleteList} /> );
           })}
           
-          <EduButtonWrapper>
-            <button onClick={editCompleteHandler}> 완료 </button>
-            <button onClick={editCancelHandler}> 취소 </button>
-            <button onClick={addEduDataHandler}> 추가 </button>
-          </EduButtonWrapper>
+          <ContentsButtonWrapper>
+            <BsPlusSquare size="26" onClick={addEduDataHandler}> 추가 </BsPlusSquare>
+            <BsCheckBox size="29" onClick={editCompleteHandler}> 완료 </BsCheckBox>
+            <CgCloseR size="29" onClick={editCancelHandler}> 취소 </CgCloseR>
+          </ContentsButtonWrapper>
         </div> :
         <div>
           {eduData.map(element => {
@@ -134,12 +119,12 @@ const Edu = (props) => {
             eduMajor={element.major}
             eduType={element.edu_type} /> );
           })}
-          <EduButtonWrapper>
-            {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
-          </EduButtonWrapper>
+          <ContentsButtonWrapper>
+            {user_id === props.userId && <BsPencilSquare size="26" onClick={editTriggerHandler}> 수정 </BsPencilSquare>}
+          </ContentsButtonWrapper>
         </div>
       }
-    </EduStyle>
+    </ContentsStyle>
   );
 }
 

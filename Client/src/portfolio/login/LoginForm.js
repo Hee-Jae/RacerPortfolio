@@ -4,14 +4,8 @@ import { useHistory } from "react-router-dom";
 import {login} from "redux/action";
 import { BACKEND_URL } from "utils/env";
 import { pwRegex, emailRegex } from "utils/validation";
+import { LoginFormStyle, LoginTitle, LoginButtonStyle, InputStyle, FlashMessage } from "portfolio/login/LoginStyle";
 import axios from 'axios';
-import styled from "styled-components";
-
-const LoginFormStyle = styled.div`
-  width: 80%;
-  margin: 0 auto;
-  border: solid 2px blue;
-`;
 
 const LoginForm = () => {
 
@@ -46,6 +40,10 @@ const LoginForm = () => {
     }
   };
 
+  const googleLoginHandler = () => {
+    history.push('/googlelogin');
+  };
+
   useEffect(() => {
     if(email === '' || pw === '') setIsBlank(true);
     else setIsBlank(false);
@@ -62,13 +60,21 @@ const LoginForm = () => {
 
   return(
     <LoginFormStyle>
-    <p>{message}</p>
-    <form>
-      <p>이메일</p><input type="text" value={email} onChange={e => setEmail(e.target.value)} />
-      
-      <p>비밀번호</p><input type="password" value={pw} onChange={e => setPw(e.target.value)} />
-    </form>
-    <button type="submit" onClick={loginHandler}> 로그인 </button>
+    <LoginTitle> 레이서 포트폴리오 로그인 </LoginTitle>
+    <FlashMessage>{message}</FlashMessage>
+
+      <InputStyle>
+      <div>
+        <input type="text" value={email} onChange={e => setEmail(e.target.value)} placeholder="이메일"/>
+      </div>
+      <div>
+        <input type="password" value={pw} onChange={e => setPw(e.target.value)} placeholder="비밀번호" />
+      </div>
+      </InputStyle>
+    <LoginButtonStyle>
+      <button type="submit" onClick={loginHandler}> 로그인 </button>
+      <button onClick={googleLoginHandler}> 구글계정으로 로그인</button>
+    </LoginButtonStyle>
     </LoginFormStyle>
   );
 }

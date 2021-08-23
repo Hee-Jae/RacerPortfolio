@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import axios from "axios";
 import { BACKEND_URL } from 'utils/env';
 import { header } from 'utils/header';
@@ -8,39 +7,7 @@ import { useDispatch } from 'react-redux';
 import { logout, refresh } from 'redux/action';
 import { useHistory } from 'react-router';
 import { nameRegex } from 'utils/validation';
-
-const ProfileStyle = styled.div`
-  border: solid 3px grey;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  margin: 15px;
-
-  button{
-    width: 30%;
-    margin: 0 auto;
-  }
-`;
-
-const ProfileButtonWrapper = styled.div`
-  margin-top: 20px;
-`
-
-const ProfileFormStyle = styled.div`
-  border: 1px solid green;
-  padding: 3px;
-  + div{
-    margin-top: 20px;
-  }
-`;
-
-const ProfileContentsStyle = styled.div`
-  border: solid 2px purple;
-  
-  + div{
-    margin-top: 10px;
-  }
-`;
+import { ContentsStyle, ContentsButtonWrapper, ContentsFormStyle, ProfileInnerStyle } from 'portfolio/contents/ContentsStyle';
 
 const Profile = (props) => {
   
@@ -118,12 +85,11 @@ const Profile = (props) => {
     }, [userName, description, image]);
   
   return(
-    <ProfileStyle>
-      <h2> 프로필 </h2>
+    <ContentsStyle>
       {edit ? 
         <div>
             <form onSubmit={submitHandler} encType="multipart/form-data">
-              <ProfileFormStyle>
+              <ContentsFormStyle>
                 <div>
                   <input type="file" placeholder="이미지" onChange={e => setImage(e.target.files[0])} />
                 </div>
@@ -133,29 +99,29 @@ const Profile = (props) => {
                 <div>
                   <input type="text" placeholder="한줄소개" value={description} onChange={e => setDescription(e.target.value)} />
                 </div>
-              </ProfileFormStyle>
+              </ContentsFormStyle>
               
-              <ProfileButtonWrapper>
+              <ContentsButtonWrapper>
                 <button type="submit"> 완료 </button>
                 <button onClick={editCancelHandler}> 취소 </button>
-              </ProfileButtonWrapper>
+              </ContentsButtonWrapper>
             </form>
           
         </div> :
         <div>
-          <ProfileContentsStyle>
+          <ProfileInnerStyle>
             {image === null ?
             <div> 프로필 사진이 없어요 </div> :
             <img src={`data:image/png;base64,${profileData.image}`} width='100px' alt='프로필사진'/> }
             <p> {profileData.name} </p>
             <p> {profileData.description} </p>
-          </ProfileContentsStyle>
-          <ProfileButtonWrapper>
+          </ProfileInnerStyle>
+          <ContentsButtonWrapper>
             {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
-          </ProfileButtonWrapper>
+          </ContentsButtonWrapper>
         </div>
       }
-    </ProfileStyle>
+    </ContentsStyle>
   );
 }
 

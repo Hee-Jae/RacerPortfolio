@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import axios from "axios";
 import AwardContents from 'portfolio/contents/Award/AwardContents';
 import AwardForm from 'portfolio/contents/Award/AwardForm';
@@ -10,23 +9,7 @@ import { useDispatch } from 'react-redux';
 import { logout, refresh } from 'redux/action';
 import { useHistory } from 'react-router';
 import { awardDataValidation } from 'utils/validation';
-
-const AwardStyle = styled.div`
-  border: solid 3px grey;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  margin: 15px;
-
-  button{
-    width: 30%;
-    margin: 0 auto;
-  }
-`;
-
-const AwardButtonWrapper = styled.div`
-  margin-top: 20px;
-`
+import { ContentsStyle, ContentsButtonWrapper} from 'portfolio/contents/ContentsStyle';
 
 const Award = (props) => {
   
@@ -101,7 +84,7 @@ const Award = (props) => {
   };
   
   return(
-    <AwardStyle>
+    <ContentsStyle>
       <h2> 수상이력 </h2>
       {edit ? 
         <div>
@@ -118,26 +101,26 @@ const Award = (props) => {
             setDeleteList={setDeleteList} /> );
           })}
           
-          <AwardButtonWrapper>
+          <ContentsButtonWrapper>
             <button onClick={editCompleteHandler}> 완료 </button>
             <button onClick={editCancelHandler}> 취소 </button>
             <button onClick={addAwardDataHandler}> 추가 </button>
-          </AwardButtonWrapper>
+          </ContentsButtonWrapper>
         </div> :
         <div>
-          {awardData.map(element => {
-            return(
-            <AwardContents key={element.id}
-            awardId={element.id}
-            awardName={element.name} 
-            awardDescription={element.description} /> );
-          })}
-          <AwardButtonWrapper>
+            {awardData.map(element => {
+              return(
+              <AwardContents key={element.id}
+              awardId={element.id}
+              awardName={element.name}
+              awardDescription={element.description} /> );
+            })}
+          <ContentsButtonWrapper>
           {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
-          </AwardButtonWrapper>
+          </ContentsButtonWrapper>
         </div>
       }
-    </AwardStyle>
+    </ContentsStyle>
   );
 }
 

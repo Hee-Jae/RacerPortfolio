@@ -1,10 +1,9 @@
 import {NavComponent, Main, Network, Login, GoogleLoginComponent, Register, Posts} from 'portfolio/components';
-import {BrowserRouter, Route, Link, Switch, useHistory} from 'react-router-dom';
-import {Provider, useSelector} from "react-redux";
+import {BrowserRouter, Route} from 'react-router-dom';
+import {Provider} from "react-redux";
 import store from "redux/store";
 import { persistStore } from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
-import { useEffect } from 'react';
 
 function App() {
 

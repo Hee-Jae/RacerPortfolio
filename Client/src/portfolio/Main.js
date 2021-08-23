@@ -1,20 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {Award, Certificate, Edu, Profile, Project} from 'portfolio/contents/all-contents'
-import styled from 'styled-components';
 import axios from 'axios';
 import {BACKEND_URL} from 'utils/env';
 import {header} from 'utils/header';
 import { useHistory } from 'react-router-dom';
 import { logout, refresh } from 'redux/action';
-
-const MainStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  width: 40%;
-  margin: 0 auto;
-`;
+import { MainStyle, MainContents, PortfolioStyle, ProfileStyle } from 'portfolio/MainStyle';
 
 const Main = () => {
 
@@ -88,13 +80,17 @@ const Main = () => {
   return(
     <MainStyle>
       {isFetched ? 
-        <div>
-          <Profile profileData={portfolios.profileData} userId={portfolios.userId} />
-          <Edu eduData={portfolios.eduData} userId={portfolios.userId} />
-          <Award awardData={portfolios.awardData} userId={portfolios.userId} />
-          <Project projectData={portfolios.projectData} userId={portfolios.userId} />
-          <Certificate certificateData={portfolios.certificateData} userId={portfolios.userId}/>
-        </div>:
+        <MainContents>
+          <ProfileStyle>
+            <Profile profileData={portfolios.profileData} userId={portfolios.userId} />
+          </ProfileStyle>
+          <PortfolioStyle>
+            <Edu eduData={portfolios.eduData} userId={portfolios.userId} />
+            <Award awardData={portfolios.awardData} userId={portfolios.userId} />
+            <Project projectData={portfolios.projectData} userId={portfolios.userId} />
+            <Certificate certificateData={portfolios.certificateData} userId={portfolios.userId}/>
+          </PortfolioStyle>
+        </MainContents>:
         <div> Loading... </div> 
       }
     </MainStyle>

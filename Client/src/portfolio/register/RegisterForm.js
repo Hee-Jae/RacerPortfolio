@@ -3,6 +3,7 @@ import axios from "axios";
 import { BACKEND_URL } from "utils/env";
 import { useHistory } from "react-router-dom";
 import { pwRegex, emailRegex, nameRegex } from "utils/validation";
+import { RegisterFormStyle, RegisterTitle, RegisterButtonStyle, FlashMessage } from "portfolio/register/RegisterStyle";
 
 const RegisterForm = () => {
 
@@ -65,20 +66,29 @@ const RegisterForm = () => {
 
 
   return(
-    <>
-    <form>
-      <p>이메일</p><input type="text" value={email} onChange={e => setEmail(e.target.value)} />
-      {(email !== '' && !validEmail) && <p style={{color:'red'}}> 이메일 형식이 올바르지 않습니다. ex) abc@domain.com </p>}
-      <p>비밀번호</p><input type="password" value={pw} onChange={e => setPw(e.target.value)} />
-      {(pw !== '' && !validPw) && <p style={{color:'red'}}> 다음 중 한가지를 만족해주세요. <br/> 8자 이상: 특수문자, 영어, 숫자 포함 <br/> 10자 이상: 특수문자, 영어, 숫자중 2종류 포함 </p>}
-      <p>비밀번호 확인</p><input type="password" value={pwCheck} onChange={e => setPwCheck(e.target.value)} />
-      {(pwCheck !== '' && wrongPw) && <p style={{color:'red'}}> 비밀번호가 일치하지 않습니다. </p>}
-      <p>이름</p><input type="text" value={userName} onChange={e => setUserName(e.target.value)} />
-      {(userName !== '' && !validName) && <p style={{color:'red'}}> 이름에는 숫자 또는 특수문자가 포함될 수 없습니다. (20자 이내)</p>}
-      {isBlank && <p style={{color:'red'}}> 모든 항목을 채워주세요. </p>}
-    </form>
-    <button type="submit" onClick={registerHandler} disabled={!allOk}> 회원가입 </button>
-    </>
+    <RegisterFormStyle>
+      <RegisterTitle> 레이서 포트폴리오 회원가입 </RegisterTitle>
+      <div>
+        <input type="text" value={email} onChange={e => setEmail(e.target.value)} placeholder="이메일"/>
+        {(email !== '' && !validEmail) && <FlashMessage> 이메일 형식이 올바르지 않습니다. ex) abc@domain.com </FlashMessage>}
+      </div>
+      <div>
+        <input type="password" value={pw} onChange={e => setPw(e.target.value)} placeholder="비밀번호"/>
+        {(pw !== '' && !validPw) && <FlashMessage> 다음 중 한가지를 만족해주세요. <br/> 8자 이상: 특수문자, 영어, 숫자 포함 <br/> 10자 이상: 특수문자, 영어, 숫자중 2종류 포함 </FlashMessage>}
+      </div>
+      <div>
+        <input type="password" value={pwCheck} onChange={e => setPwCheck(e.target.value)} placeholder="비밀번호 확인"/>
+        {(pwCheck !== '' && wrongPw) && <FlashMessage> 비밀번호가 일치하지 않습니다. </FlashMessage>}
+      </div>
+      <div>
+        <input type="text" value={userName} onChange={e => setUserName(e.target.value)} placeholder="이름"/>
+        {(userName !== '' && !validName) && <FlashMessage> 이름에는 숫자 또는 특수문자가 포함될 수 없습니다. (20자 이내)</FlashMessage>}
+        {isBlank && <FlashMessage> 모든 항목을 채워주세요. </FlashMessage>}
+      </div>
+    <RegisterButtonStyle>
+      <button onClick={registerHandler} disabled={!allOk}> 회원가입 </button>
+    </RegisterButtonStyle>
+    </RegisterFormStyle>
   );
 }
 

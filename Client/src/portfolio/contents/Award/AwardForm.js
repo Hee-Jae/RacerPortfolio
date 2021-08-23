@@ -1,13 +1,5 @@
 import React, {useState, useEffect} from "react";
-import styled from "styled-components";
-
-const AwardFormStyle = styled.div`
-  border: 1px solid green;
-  padding: 3px;
-  + div{
-    margin-top: 20px;
-  }
-`;
+import { ContentsFormStyle } from 'portfolio/contents/ContentsStyle';
 
 const AwardForm = (props) => {
 
@@ -34,7 +26,7 @@ const AwardForm = (props) => {
   };
 
   return(
-    <AwardFormStyle>
+    <ContentsFormStyle>
       <div>
         <input type="text" placeholder="상 이름" value={award} onChange={e => setAward(e.target.value)} />
       </div>
@@ -42,7 +34,7 @@ const AwardForm = (props) => {
         <input type="text" placeholder="내용" value={description} onChange={e => setDescription(e.target.value)} />
       </div>
       <button onClick={deleteHandler}> 삭제 </button>
-    </AwardFormStyle>
+    </ContentsFormStyle>
   );
 };
 

@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import axios from "axios";
 import ProjectContents from 'portfolio/contents/Project/ProjectContents';
 import ProjectForm from 'portfolio/contents/Project/ProjectForm';
@@ -11,23 +10,7 @@ import { useDispatch } from 'react-redux';
 import { logout, refresh } from 'redux/action';
 import { useHistory } from 'react-router';
 import { projectDataValidation } from 'utils/validation';
-
-const ProjectStyle = styled.div`
-  border: solid 3px grey;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  margin: 15px;
-
-  button{
-    width: 30%;
-    margin: 0 auto;
-  }
-`;
-
-const ProjectButtonWrapper = styled.div`
-  margin-top: 20px;
-`;
+import { ContentsStyle, ContentsButtonWrapper} from 'portfolio/contents/ContentsStyle';
 
 const Project = (props) => {
 
@@ -109,7 +92,7 @@ const Project = (props) => {
   };
   
   return(
-    <ProjectStyle>
+    <ContentsStyle>
       <h2> 프로젝트 </h2>
       {edit ? 
         <div>
@@ -129,11 +112,11 @@ const Project = (props) => {
             setDeleteList={setDeleteList} /> );
           })}
           
-          <ProjectButtonWrapper>
+          <ContentsButtonWrapper>
             <button onClick={editCompleteHandler}> 완료 </button>
             <button onClick={editCancelHandler}> 취소 </button>
             <button onClick={addProjectDataHandler}> 추가 </button>
-          </ProjectButtonWrapper>
+          </ContentsButtonWrapper>
         </div> :
         <div>
           {projectData.map(element => {
@@ -146,12 +129,12 @@ const Project = (props) => {
             projectEnddate={element.enddate}
             projectUrl={element.url} /> );
           })}
-          <ProjectButtonWrapper>
+          <ContentsButtonWrapper>
             {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
-          </ProjectButtonWrapper>
+          </ContentsButtonWrapper>
         </div>
       }
-    </ProjectStyle>
+    </ContentsStyle>
   );
 }
 

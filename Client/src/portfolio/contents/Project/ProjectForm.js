@@ -3,14 +3,7 @@ import styled from "styled-components";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
-
-const ProjectFormStyle = styled.div`
-  border: 1px solid green;
-  padding: 3px;
-  + div{
-    margin-top: 20px;
-  }
-`;
+import { ContentsFormStyle } from 'portfolio/contents/ContentsStyle';
 
 const DatePickerStyle = styled.div`
   display: inline-block;
@@ -59,7 +52,7 @@ const ProjectForm = (props) => {
   }
 
   return(
-    <ProjectFormStyle>
+    <ContentsFormStyle>
       <InnerFormStyle>
         <input type="text" placeholder="프로젝트명" value={project} onChange={e => setProject(e.target.value)} />
       </InnerFormStyle>
@@ -79,7 +72,7 @@ const ProjectForm = (props) => {
         <input type="text" placeholder="프로젝트 주소" value={url} onChange={e => setUrl(e.target.value)} />
       </InnerFormStyle>
       <button onClick={deleteHandler}> 삭제 </button>
-    </ProjectFormStyle>
+    </ContentsFormStyle>
   );
 };
 
