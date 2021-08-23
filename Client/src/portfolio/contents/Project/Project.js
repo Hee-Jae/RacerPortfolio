@@ -5,6 +5,7 @@ import axios from "axios";
 import ProjectContents from 'portfolio/contents/Project/ProjectContents';
 import ProjectForm from 'portfolio/contents/Project/ProjectForm';
 import { BACKEND_URL } from 'utils/env';
+import { header } from 'utils/header';
 import moment from 'moment';
 
 const ProjectStyle = styled.div`
@@ -27,6 +28,7 @@ const ProjectButtonWrapper = styled.div`
 const Project = (props) => {
 
   const [edit, setEdit] = useState(false);
+  const [projectData, setProjectData] = useState(props.projectData)
   const [copyProjectData, setCopyProjectData] = useState(props.projectData);
   const [newIndex, setNewIndex] = useState(0);
   const [deleteList, setDeleteList] = useState([]);
@@ -34,36 +36,29 @@ const Project = (props) => {
   const access_token = useSelector((state) => state.user.access_token);
   const user_id = useSelector((state) => state.user.user_id);
 
-  const header = {
-    headers : {
-      'Content-Type' : "application/json",
-      'Authorization' : `Bearer ${access_token}`,
-    }
-  };
-
   const editTriggerHandler = () => {
-    setCopyProjectData(props.projectData);
+    setCopyProjectData(projectData);
     setEdit(true);
   };
 
   const editCancelHandler = () => {
-    props.setProjectData(copyProjectData);
+    setProjectData(copyProjectData);
     setEdit(false);
     setNewIndex(0);
     setDeleteList([]);
   };
 
   const editCompleteHandler = async () => {
-    const deleteResponse = await axios.post(BACKEND_URL + '/projects/delete', deleteList.filter(item => item > 0), header);
-    const response = await axios.put(BACKEND_URL + '/projects', props.projectData, header);
-    props.setProjectData(response.data);
+    const deleteResponse = await axios.post(BACKEND_URL + '/projects/delete', deleteList.filter(item => item > 0), header(access_token));
+    const response = await axios.put(BACKEND_URL + '/projects', projectData, header(access_token));
+    setProjectData(response.data);
     setEdit(false);
     setNewIndex(0);
     setDeleteList([]);
   };
 
   const addProjectDataHandler = () => {
-    const newProjectData = props.projectData.concat({
+    const newProjectData = projectData.concat({
       id: newIndex, name: '',
       description: '',
       startdate: moment(new Date()).format('YYYY-MM-DD'),
@@ -72,7 +67,7 @@ const Project = (props) => {
       user_id: props.userId
     });
     setNewIndex(newIndex - 1);
-    props.setProjectData(newProjectData);
+    setProjectData(newProjectData);
   };
   
   return(
@@ -80,7 +75,7 @@ const Project = (props) => {
       <h2> 프로젝트 </h2>
       {edit ? 
         <div>
-          {props.projectData.map(element => {
+          {projectData.map(element => {
             return(
             <ProjectForm key={element.id}
             formId={element.id}
@@ -90,8 +85,8 @@ const Project = (props) => {
             formEnddate={element.enddate}
             formUrl={element.url}
             formUserId={element.user_id}
-            projectData={props.projectData}
-            setProjectData={props.setProjectData}
+            projectData={projectData}
+            setProjectData={setProjectData}
             deleteList={deleteList}
             setDeleteList={setDeleteList} /> );
           })}
@@ -103,7 +98,7 @@ const Project = (props) => {
           </ProjectButtonWrapper>
         </div> :
         <div>
-          {props.projectData.map(element => {
+          {projectData.map(element => {
             return(
             <ProjectContents key={element.id}
             projectId={element.id}

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from "axios";
 import { BACKEND_URL } from 'utils/env';
+import { header } from 'utils/header';
 
 const ProfileStyle = styled.div`
   border: solid 3px grey;
@@ -40,6 +41,7 @@ const ProfileContentsStyle = styled.div`
 const Profile = (props) => {
   
   const [edit, setEdit] = useState(false);
+  const [profileData, setProfileData] = useState(props.profileData);
   const [copyProfileData, setCopyProfileData] = useState(props.profileData);
   const [userName, setUserName] = useState(props.profileData.name);
   const [image, setImage] = useState(props.profileData.image);
@@ -48,15 +50,8 @@ const Profile = (props) => {
   const access_token = useSelector((state) => state.user.access_token);
   const user_id = useSelector((state) => state.user.user_id);
 
-  const header = {
-    headers : {
-      'Content-Type' : "multipart/form-data",
-      'Authorization' : `Bearer ${access_token}`,
-    }
-  };
-
   const editTriggerHandler = () => {
-    setCopyProfileData(props.profileData);
+    setCopyProfileData(profileData);
     setEdit(true);
   };
 
@@ -64,7 +59,7 @@ const Profile = (props) => {
     setUserName(copyProfileData.name);
     setDescription(copyProfileData.description);
     setImage(copyProfileData.image);
-    props.setProfileData(copyProfileData);
+    setProfileData(copyProfileData);
     setEdit(false);
   };
 
@@ -77,9 +72,9 @@ const Profile = (props) => {
     formData.append("name", userName);
     formData.append("description", description);
 
-    const response = await axios.post(BACKEND_URL + '/profiles', formData, header);
+    const response = await axios.post(BACKEND_URL + '/profiles', formData, header(access_token));
 
-    props.setProfileData(response.data);
+    setProfileData(response.data);
     setEdit(false);
   };
 
@@ -104,7 +99,7 @@ const Profile = (props) => {
         user_id: props.formUserId
       };
 
-      props.setProfileData(newProfileData);
+      setProfileData(newProfileData);
     }, [userName, description, image]);
   
   return(
@@ -136,9 +131,9 @@ const Profile = (props) => {
           <ProfileContentsStyle>
             {image === null ?
             <div> 프로필 사진이 없어요 </div> :
-            <img src={`data:image/png;base64,${props.profileData.image}`} width='100px' alt='프로필사진'/> }
-            <p> {props.profileData.name} </p>
-            <p> {props.profileData.description} </p>
+            <img src={`data:image/png;base64,${profileData.image}`} width='100px' alt='프로필사진'/> }
+            <p> {profileData.name} </p>
+            <p> {profileData.description} </p>
           </ProfileContentsStyle>
           <ProfileButtonWrapper>
             {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}

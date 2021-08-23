@@ -5,6 +5,7 @@ import axios from "axios";
 import CertificateContents from 'portfolio/contents/Certificate/CertificateContents';
 import CertificateForm from 'portfolio/contents/Certificate/CertificateForm';
 import { BACKEND_URL } from 'utils/env';
+import { header } from 'utils/header';
 import moment from 'moment';
 
 const CertificateStyle = styled.div`
@@ -27,6 +28,7 @@ const CertificateButtonWrapper = styled.div`
 const Certificate = (props) => {
 
   const [edit, setEdit] = useState(false);
+  const [certificateData, setCertificateData] = useState(props.certificateData);
   const [copyCertificateData, setCopyCertificateData] = useState(props.certificateData);
   const [newIndex, setNewIndex] = useState(0);
   const [deleteList, setDeleteList] = useState([]);
@@ -34,36 +36,29 @@ const Certificate = (props) => {
   const access_token = useSelector((state) => state.user.access_token);
   const user_id = useSelector((state) => state.user.user_id);
 
-  const header = {
-    headers : {
-      'Content-Type' : "application/json",
-      'Authorization' : `Bearer ${access_token}`,
-    }
-  };
-
   const editTriggerHandler = () => {
-    setCopyCertificateData(props.certificateData);
+    setCopyCertificateData(certificateData);
     setEdit(true);
   };
 
   const editCancelHandler = () => {
-    props.setCertificateData(copyCertificateData);
+    setCertificateData(copyCertificateData);
     setEdit(false);
     setNewIndex(0);
     setDeleteList([]);
   };
 
   const editCompleteHandler = async () => {
-    const deleteResponse = await axios.post(BACKEND_URL + '/certificates/delete', deleteList.filter(item => item > 0), header);
-    const response = await axios.put(BACKEND_URL + '/certificates', props.certificateData, header);
-    props.setCertificateData(response.data);
+    const deleteResponse = await axios.post(BACKEND_URL + '/certificates/delete', deleteList.filter(item => item > 0), header(access_token));
+    const response = await axios.put(BACKEND_URL + '/certificates', certificateData, header(access_token));
+    setCertificateData(response.data);
     setEdit(false);
     setNewIndex(0);
     setDeleteList([]);
   };
 
   const addCertificateDataHandler = () => {
-    const newCertificateData = props.certificateData.concat({
+    const newCertificateData = certificateData.concat({
       id: newIndex,
       name: '',
       agency: '',
@@ -71,7 +66,7 @@ const Certificate = (props) => {
       user_id: props.userId
     });
     setNewIndex(newIndex - 1);
-    props.setCertificateData(newCertificateData);
+    setCertificateData(newCertificateData);
   };
   
   return(
@@ -79,7 +74,7 @@ const Certificate = (props) => {
       <h2> 자격증 </h2>
       {edit ? 
         <div>
-          {props.certificateData.map(element => {
+          {certificateData.map(element => {
             return(
             <CertificateForm key={element.id}
             formId={element.id}
@@ -87,8 +82,8 @@ const Certificate = (props) => {
             formAgency={element.agency}
             formDate={element.date}
             formUserId={element.user_id}
-            certificateData={props.certificateData}
-            setCertificateData={props.setCertificateData}
+            certificateData={certificateData}
+            setCertificateData={setCertificateData}
             deleteList={deleteList}
             setDeleteList={setDeleteList} /> );
           })}
@@ -100,7 +95,7 @@ const Certificate = (props) => {
           </CertificateButtonWrapper>
         </div> :
         <div>
-          {props.certificateData.map(element => {
+          {certificateData.map(element => {
             return(
             <CertificateContents key={element.id}
             certificateId={element.id}
