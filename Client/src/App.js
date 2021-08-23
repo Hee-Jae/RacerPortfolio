@@ -1,7 +1,7 @@
-import {NavComponent, Main, Network, Login, GoogleLoginCompnent, Register} from './portfolio/components';
+import {NavComponent, Main, Network, Login, GoogleLoginComponent, Register} from 'portfolio/components';
 import {BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import {Provider, useSelector} from "react-redux";
-import store from "./redux/store";
+import store from "redux/store";
 import { persistStore } from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
 
@@ -14,7 +14,7 @@ function App() {
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <NavComponent />
-          <Route path="/" exact>
+          <Route path="/main" exact>
             <Main />
           </Route>
           <Route path="/network">
@@ -24,7 +24,7 @@ function App() {
             <Login />
           </Route>
           <Route path="/googlelogin">
-            <GoogleLoginCompnent />
+            <GoogleLoginComponent />
           </Route>
           <Route path="/register">
             <Register />

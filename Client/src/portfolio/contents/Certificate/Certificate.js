@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from "axios";
-import CertificateContents from './CertificateContents';
-import CertificateForm from './CertificateForm';
-import { BACKEND_URL } from '../../../env';
+import CertificateContents from 'portfolio/contents/Certificate/CertificateContents';
+import CertificateForm from 'portfolio/contents/Certificate/CertificateForm';
+import { BACKEND_URL } from 'utils/env';
 import moment from 'moment';
 
 const CertificateStyle = styled.div`
@@ -25,10 +25,6 @@ const CertificateButtonWrapper = styled.div`
 `;
 
 const Certificate = (props) => {
-  
-  useEffect(() => {
-    console.log(props.certificateData);
-  }, [])
 
   const [edit, setEdit] = useState(false);
   const [copyCertificateData, setCopyCertificateData] = useState(props.certificateData);
@@ -36,6 +32,7 @@ const Certificate = (props) => {
   const [deleteList, setDeleteList] = useState([]);
 
   const access_token = useSelector((state) => state.user.access_token);
+  const user_id = useSelector((state) => state.user.user_id);
 
   const header = {
     headers : {
@@ -59,7 +56,6 @@ const Certificate = (props) => {
   const editCompleteHandler = async () => {
     const deleteResponse = await axios.post(BACKEND_URL + '/certificates/delete', deleteList.filter(item => item > 0), header);
     const response = await axios.put(BACKEND_URL + '/certificates', props.certificateData, header);
-    console.log(response.data);
     props.setCertificateData(response.data);
     setEdit(false);
     setNewIndex(0);
@@ -113,7 +109,7 @@ const Certificate = (props) => {
             certificateDate={element.date} /> );
           })}
           <CertificateButtonWrapper>
-            <button onClick={editTriggerHandler}> 수정 </button>
+          {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
           </CertificateButtonWrapper>
         </div>
       }

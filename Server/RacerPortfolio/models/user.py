@@ -9,14 +9,14 @@ class User(db.Model):
   password    = db.Column(db.String(256), nullable=False)
   name        = db.Column(db.String(45), nullable=False)
   description = db.Column(db.String(256))
-  image       = db.Column(db.String(500))
-  type        = db.Column(db.Integer, nullable=False)
+  image       = db.Column(db.String(45))
+  user_type        = db.Column(db.Integer, nullable=False)
 
-  def __init__(self, email, password, name, type):
+  def __init__(self, email, password, name, user_type):
     self.email      = email
     self.password   = password
     self.name       = name
-    self.type       = type
+    self.user_type       = user_type
 
   def as_dict(self):
-    return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    return {c.name: getattr(self, c.name) for c in self.__table__.columns if (c.name not in ['email', 'password', 'user_type'])}

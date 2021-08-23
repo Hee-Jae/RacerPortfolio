@@ -10,11 +10,13 @@ from api.awards import awards
 from api.profile import profiles
 from api.projects import projects
 from api.certificates import certificates
+from api.network import network
 
 from secret import SECRET_KEY, JWT_SECRET_KEY
 from oauth2client.contrib.flask_util import UserOAuth2
 from flask_jwt_extended import JWTManager
 import config
+import os
 
 def create_app():
     app = Flask(__name__)
@@ -25,6 +27,7 @@ def create_app():
     app.register_blueprint(profiles)
     app.register_blueprint(projects)
     app.register_blueprint(certificates)
+    app.register_blueprint(network)
     
     app.config.from_object(config)
     db.init_app(app)
@@ -32,6 +35,8 @@ def create_app():
     migrate = Migrate()
     migrate.init_app(app, db, compare_type=True)
     from models import user, award, edu, project, certificate
+    
+    app.config['UPLOAD_DIR'] = os.getcwd()
     
     app.secret_key = SECRET_KEY
     

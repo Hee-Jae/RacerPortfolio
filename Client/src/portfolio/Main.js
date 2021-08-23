@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
-import {Award, Certificate, Edu, Profile, Project} from './contents/all-contents'
+import {Award, Certificate, Edu, Profile, Project} from 'portfolio/contents/all-contents'
 import styled from 'styled-components';
 import axios from 'axios';
-import {BACKEND_URL} from '../env';
+import {BACKEND_URL} from 'utils/env';
 
 const MainStyle = styled.div`
   display: flex;
@@ -16,6 +16,10 @@ const MainStyle = styled.div`
 const Main = () => {
 
   const access_token = useSelector((state) => state.user.access_token);
+  const user_id = useSelector((state) => state.user.user_id);
+  const queryParams = new URLSearchParams(window.location.search);
+  const post_id = queryParams.get('user');
+
   const header = {
     headers : {
       'Content-Type' : "application/json",
@@ -32,7 +36,7 @@ const Main = () => {
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect( async () => {
-    const response = await axios.get(BACKEND_URL + '/posts', header);
+    const response = await axios.get(BACKEND_URL + `/posts?user=${post_id}`, header);
     setUserId(response.data.user_id);
     setProfileData(response.data.profile);
     setEduData(response.data.edus);
@@ -40,7 +44,6 @@ const Main = () => {
     setProjectData(response.data.projects);
     setCertificateData(response.data.certificates);
     setIsFetched(true);
-    console.log("Main Called !");
   }, []);
 
   

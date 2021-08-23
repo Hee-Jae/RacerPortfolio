@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from "axios";
-import ProjectContents from './ProjectContents';
-import ProjectForm from './ProjectForm';
-import { BACKEND_URL } from '../../../env';
+import ProjectContents from 'portfolio/contents/Project/ProjectContents';
+import ProjectForm from 'portfolio/contents/Project/ProjectForm';
+import { BACKEND_URL } from 'utils/env';
 import moment from 'moment';
 
 const ProjectStyle = styled.div`
@@ -25,10 +25,6 @@ const ProjectButtonWrapper = styled.div`
 `;
 
 const Project = (props) => {
-  
-  useEffect(() => {
-    console.log(props.projectData);
-  }, [])
 
   const [edit, setEdit] = useState(false);
   const [copyProjectData, setCopyProjectData] = useState(props.projectData);
@@ -36,6 +32,7 @@ const Project = (props) => {
   const [deleteList, setDeleteList] = useState([]);
 
   const access_token = useSelector((state) => state.user.access_token);
+  const user_id = useSelector((state) => state.user.user_id);
 
   const header = {
     headers : {
@@ -59,7 +56,6 @@ const Project = (props) => {
   const editCompleteHandler = async () => {
     const deleteResponse = await axios.post(BACKEND_URL + '/projects/delete', deleteList.filter(item => item > 0), header);
     const response = await axios.put(BACKEND_URL + '/projects', props.projectData, header);
-    console.log(response.data);
     props.setProjectData(response.data);
     setEdit(false);
     setNewIndex(0);
@@ -118,7 +114,7 @@ const Project = (props) => {
             projectUrl={element.url} /> );
           })}
           <ProjectButtonWrapper>
-            <button onClick={editTriggerHandler}> 수정 </button>
+            {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
           </ProjectButtonWrapper>
         </div>
       }

@@ -26,6 +26,7 @@ yarn-error.log*
 secret.py
 __pycache__
 migrations
+media
 
 #oauth2
 oauth2.js

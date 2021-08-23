@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from "axios";
-import EduContents from './EduContents';
-import EduForm from './EduForm';
-import { BACKEND_URL } from '../../../env';
+import EduContents from 'portfolio/contents/Edu/EduContents';
+import EduForm from 'portfolio/contents/Edu/EduForm';
+import { BACKEND_URL } from 'utils/env';
 
 const EduStyle = styled.div`
   border: solid 3px grey;
@@ -31,6 +31,7 @@ const Edu = (props) => {
   const [deleteList, setDeleteList] = useState([]);
 
   const access_token = useSelector((state) => state.user.access_token);
+  const user_id = useSelector((state) => state.user.user_id);
 
   const header = {
     headers : {
@@ -54,7 +55,6 @@ const Edu = (props) => {
   const editCompleteHandler = async () => {
     const deleteResponse = await axios.post(BACKEND_URL + '/edus/delete', deleteList.filter(item => item > 0), header);
     const response = await axios.put(BACKEND_URL + '/edus', props.eduData, header);
-    console.log(response.data);
     props.setEduData(response.data);
     setEdit(false);
     setNewIndex(0);
@@ -62,7 +62,7 @@ const Edu = (props) => {
   };
 
   const addEduDataHandler = () => {
-    const newEduData = props.eduData.concat({id: newIndex, name: '', major: '', type: '', user_id: props.userId});
+    const newEduData = props.eduData.concat({id: newIndex, name: '', major: '', edu_type: '', user_id: props.userId});
     setNewIndex(newIndex - 1);
     props.setEduData(newEduData);
   };
@@ -78,7 +78,7 @@ const Edu = (props) => {
             formId={element.id}
             formName={element.name} 
             formMajor={element.major}
-            formType={element.type}
+            formType={element.edu_type}
             formUserId={element.user_id}
             eduData={props.eduData}
             setEduData={props.setEduData}
@@ -99,10 +99,10 @@ const Edu = (props) => {
             eduId={element.id}
             eduName={element.name} 
             eduMajor={element.major}
-            eduType={element.type} /> );
+            eduType={element.edu_type} /> );
           })}
           <EduButtonWrapper>
-            <button onClick={editTriggerHandler}> 수정 </button>
+            {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
           </EduButtonWrapper>
         </div>
       }

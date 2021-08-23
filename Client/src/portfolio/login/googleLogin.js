@@ -1,37 +1,35 @@
 import React, {useEffect} from "react";
 import {GoogleLogin} from 'react-google-login';
-import { google_oauth2_client_id } from './oauth2';
+import { google_oauth2_client_id } from 'portfolio/login/oauth2';
 import axios from 'axios';
-import { BACKEND_URL } from '../../env';
+import { BACKEND_URL } from 'utils/env';
 import {useDispatch, useSelector} from "react-redux";
 import { useHistory } from "react-router-dom";
-import {login} from "../../redux/action";
+import {login} from "redux/action";
 
-const GoogleLoginCompnent = (props) => {
+const GoogleLoginComponent = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
   const isLogin = useSelector((state) => state.user.isLoggedIn);
+  const user_id = useSelector((state) => state.user.user_id);
 
   useEffect(() => {
     if(isLogin){
-      history.push('/');
+      history.push(`/main?user=${user_id}`);
     }
   }, [])
 
   const onSuccessHandler = async (response) => {
-    console.log("Success!");
     const token = response.tokenObj.id_token;
     const loginRes = await axios.post(BACKEND_URL + '/google_login', {token: token});
     
-    console.log(loginRes);
-    dispatch(login(loginRes.data.auth));
-    history.push('/');
+    dispatch(login(loginRes.data.access_token, loginRes.data.refresh_token, loginRes.data.user_id));
+    history.push(`/main?user=${response.data.user_id}`);
   };
 
   const onFailureHandler = (response) => {
     console.log("Failure!");
-    console.log(response);
   };
   
   return (
@@ -48,4 +46,4 @@ const GoogleLoginCompnent = (props) => {
   );
 };
 
-export default GoogleLoginCompnent;
+export default GoogleLoginComponent;

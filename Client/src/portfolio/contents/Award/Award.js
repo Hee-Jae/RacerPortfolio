@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from "axios";
-import AwardContents from './AwardContents';
-import AwardForm from './AwardForm';
-import { BACKEND_URL } from '../../../env';
+import AwardContents from 'portfolio/contents/Award/AwardContents';
+import AwardForm from 'portfolio/contents/Award/AwardForm';
+import { BACKEND_URL } from 'utils/env';
 
 const AwardStyle = styled.div`
   border: solid 3px grey;
@@ -31,6 +31,7 @@ const Award = (props) => {
   const [deleteList, setDeleteList] = useState([]);
 
   const access_token = useSelector((state) => state.user.access_token);
+  const user_id = useSelector((state) => state.user.user_id);
 
   const header = {
     headers : {
@@ -54,7 +55,6 @@ const Award = (props) => {
   const editCompleteHandler = async () => {
     const deleteResponse = await axios.post(BACKEND_URL + '/awards/delete', deleteList.filter(item => item > 0), header);
     const response = await axios.put(BACKEND_URL + '/awards', props.awardData, header);
-    console.log(response.data);
     props.setAwardData(response.data);
     setEdit(false);
     setNewIndex(0);
@@ -100,7 +100,7 @@ const Award = (props) => {
             awardDescription={element.description} /> );
           })}
           <AwardButtonWrapper>
-            <button onClick={editTriggerHandler}> 수정 </button>
+          {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
           </AwardButtonWrapper>
         </div>
       }

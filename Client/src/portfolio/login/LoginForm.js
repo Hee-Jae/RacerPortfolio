@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { useHistory } from "react-router-dom";
-import {login} from "../../redux/action";
-import { BACKEND_URL } from "../../env";
+import {login} from "redux/action";
+import { BACKEND_URL } from "utils/env";
 import axios from 'axios';
 
 const LoginForm = () => {
@@ -17,12 +17,11 @@ const LoginForm = () => {
       const response = await axios.post(BACKEND_URL + '/login',
       {email: email,
       password: pw,
-      type: 1
+      user_type: 1
       });
 
-      console.log(response.data);
-      dispatch(login(response.data.access_token));
-      history.push('/');
+      dispatch(login(response.data.access_token, response.data.refresh_token, response.data.user_id));
+      history.push(`/main?user=${response.data.user_id}`);
     } catch(error){
       console.log(error.response);
     }
