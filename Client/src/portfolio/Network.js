@@ -52,7 +52,6 @@ const Network = () => {
         setIsFetched(true);
       } catch (error) {
         if (error.response.status === 401){
-          console.log("refreshing!");
           try{
             const refresh_response = await axios.post(BACKEND_URL + `/refresh/token`, {user_id: user_id});
             const new_token = refresh_response.data.access_token;
