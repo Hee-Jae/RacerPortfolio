@@ -11,7 +11,6 @@ export const MainStyle = styled.div`
 export const MainContents = styled.div`
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  grid-template-rows: repeat(4, 1fr);
   column-gap: 5rem;
 `;
 

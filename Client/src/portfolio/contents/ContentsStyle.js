@@ -4,8 +4,10 @@ export const ContentsStyle = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
-  margin: 15px;
 
+  + div{
+    margin-top: 2rem;
+  }
   button{
     width: 30%;
     margin: 0 auto;
