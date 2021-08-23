@@ -4,6 +4,13 @@ import { useHistory } from "react-router-dom";
 import {login} from "redux/action";
 import { BACKEND_URL } from "utils/env";
 import axios from 'axios';
+import styled from "styled-components";
+
+const LoginFormStyle = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  border: solid 2px blue;
+`;
 
 const LoginForm = () => {
 
@@ -28,13 +35,13 @@ const LoginForm = () => {
   };
 
   return(
-    <>
+    <LoginFormStyle>
     <form>
       <p>아이디</p><input type="text" value={email} onChange={e => setEmail(e.target.value)} />
       <p>비밀번호</p><input type="password" value={pw} onChange={e => setPw(e.target.value)} />
     </form>
     <button type="submit" onClick={loginHandler}> 로그인 </button>
-    </>
+    </LoginFormStyle>
   );
 }
 
