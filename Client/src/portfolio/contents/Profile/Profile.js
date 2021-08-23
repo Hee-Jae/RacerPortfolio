@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import axios from "axios";
 import { BACKEND_URL } from 'utils/env';
 import { header } from 'utils/header';
+import { useDispatch } from 'react-redux';
+import { logout, refresh } from 'redux/action';
+import { useHistory } from 'react-router';
 
 const ProfileStyle = styled.div`
   border: solid 3px grey;
@@ -49,6 +52,8 @@ const Profile = (props) => {
 
   const access_token = useSelector((state) => state.user.access_token);
   const user_id = useSelector((state) => state.user.user_id);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const editTriggerHandler = () => {
     setCopyProfileData(profileData);
@@ -72,10 +77,26 @@ const Profile = (props) => {
     formData.append("name", userName);
     formData.append("description", description);
 
-    const response = await axios.post(BACKEND_URL + '/profiles', formData, header(access_token));
-
-    setProfileData(response.data);
-    setEdit(false);
+    try{
+      const response = await axios.post(BACKEND_URL + '/profiles', formData, header(access_token));
+      setProfileData(response.data);
+      setEdit(false);
+    } catch (error){
+      if(error.response !== undefined && error.response.status === 401){
+        try{
+          const refresh_response = await axios.post(BACKEND_URL + `/refresh/token`, {user_id: user_id});
+          const new_token = refresh_response.data.access_token;
+          dispatch(refresh(new_token));
+          const response = await axios.post(BACKEND_URL + '/profiles', formData, header(new_token));
+          setProfileData(response.data);
+          setEdit(false);
+        } catch(err){
+          alert('로그인 세션이 만료 되었습니다.');
+          dispatch(logout());
+          history.push('/login');
+        }
+      }
+    }
   };
 
   const changeNameHandler = (e) => {
