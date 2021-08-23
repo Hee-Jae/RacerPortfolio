@@ -7,6 +7,7 @@ import { header } from 'utils/header';
 import { useDispatch } from 'react-redux';
 import { logout, refresh } from 'redux/action';
 import { useHistory } from 'react-router';
+import { nameRegex } from 'utils/validation';
 
 const ProfileStyle = styled.div`
   border: solid 3px grey;
@@ -70,46 +71,39 @@ const Profile = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    let fileToUpload = image;
-    const formData = new FormData();
 
-    formData.append("image", fileToUpload);
-    formData.append("name", userName);
-    formData.append("description", description);
+    if(userName === '' || !nameRegex(userName)){
+      alert("이름은 필수입니다. (20자 이내)");
+    } else {
+      let fileToUpload = image;
+      const formData = new FormData();
 
-    try{
-      const response = await axios.post(BACKEND_URL + '/profiles', formData, header(access_token));
-      setProfileData(response.data);
-      setEdit(false);
-    } catch (error){
-      if(error.response !== undefined && error.response.status === 401){
-        try{
-          const refresh_response = await axios.post(BACKEND_URL + `/refresh/token`, {user_id: user_id});
-          const new_token = refresh_response.data.access_token;
-          dispatch(refresh(new_token));
-          const response = await axios.post(BACKEND_URL + '/profiles', formData, header(new_token));
-          setProfileData(response.data);
-          setEdit(false);
-        } catch(err){
-          alert('로그인 세션이 만료 되었습니다.');
-          dispatch(logout());
-          history.push('/login');
+      formData.append("image", fileToUpload);
+      formData.append("name", userName);
+      formData.append("description", description);
+
+      try{
+        const response = await axios.post(BACKEND_URL + '/profiles', formData, header(access_token));
+        setProfileData(response.data);
+        setEdit(false);
+      } catch (error){
+        if(error.response !== undefined && error.response.status === 401){
+          try{
+            const refresh_response = await axios.post(BACKEND_URL + `/refresh/token`, {user_id: user_id});
+            const new_token = refresh_response.data.access_token;
+            dispatch(refresh(new_token));
+            const response = await axios.post(BACKEND_URL + '/profiles', formData, header(new_token));
+            setProfileData(response.data);
+            setEdit(false);
+          } catch(err){
+            alert('로그인 세션이 만료 되었습니다.');
+            dispatch(logout());
+            history.push('/login');
+          }
         }
       }
     }
   };
-
-  const changeNameHandler = (e) => {
-    setUserName(e.target.value);
-  }
-
-  const changeImageHandler = (e) => {
-    setImage(e.target.files[0]);
-  }
-
-  const changeDescriptionHandler = (e)  => {
-    setDescription(e.target.value);
-  }
 
   useEffect(() => {
     const newProfileData = {
@@ -131,13 +125,13 @@ const Profile = (props) => {
             <form onSubmit={submitHandler} encType="multipart/form-data">
               <ProfileFormStyle>
                 <div>
-                  <input type="file" placeholder="이미지" onChange={changeImageHandler} />
+                  <input type="file" placeholder="이미지" onChange={e => setImage(e.target.files[0])} />
                 </div>
                 <div>
-                  <input type="text" placeholder="이름" value={userName} onChange={changeNameHandler} />
+                  <input type="text" placeholder="이름" value={userName} onChange={e => setUserName(e.target.value)} />
                 </div>
                 <div>
-                  <input type="text" placeholder="한줄소개" value={description} onChange={changeDescriptionHandler} />
+                  <input type="text" placeholder="한줄소개" value={description} onChange={e => setDescription(e.target.value)} />
                 </div>
               </ProfileFormStyle>
               

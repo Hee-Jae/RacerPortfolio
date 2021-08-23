@@ -6,6 +6,7 @@ from PIL import Image
 from base64 import b64encode
 from io import BytesIO
 from json import dumps
+from utils.validation import validate_name
 import os
 
 profiles = Blueprint('profiles', __name__, url_prefix='/profiles')
@@ -13,6 +14,13 @@ profiles = Blueprint('profiles', __name__, url_prefix='/profiles')
 @profiles.route('', methods=['POST'])
 @jwt_required()
 def put_profile():
+  
+  name = request.form['name']
+  if not name:
+    return jsonify(message = 'invalid name'), 400
+  
+  if not validate_name(name):
+    return jsonify(message = 'invalid name'), 400
   
   user_info = get_jwt_identity()
   
