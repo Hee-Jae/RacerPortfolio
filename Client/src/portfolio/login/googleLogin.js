@@ -16,7 +16,7 @@ const GoogleLoginComponent = (props) => {
 
   useEffect(() => {
     if(isLogin){
-      history.push(`/main?user=${user_id}`);
+      history.push(`/main`);
     }
   }, [])
 
@@ -24,7 +24,7 @@ const GoogleLoginComponent = (props) => {
     const token = response.tokenObj.id_token;
     const loginRes = await axios.post(BACKEND_URL + '/google_login', {token: token});
     
-    dispatch(login(loginRes.data.access_token, loginRes.data.refresh_token, loginRes.data.user_id));
+    dispatch(login(loginRes.data.access_token, loginRes.data.user_id));
     history.push(`/main?user=${response.data.user_id}`);
   };
 
