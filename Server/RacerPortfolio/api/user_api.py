@@ -73,7 +73,7 @@ def login():
     db.session.add(new_token)
   db.session.commit()
   
-  return jsonify(access_token=access_token, refresh_token=refresh_token, user_id=user.id), 200
+  return jsonify(access_token=access_token, user_id=user.id), 200
 
 
 @userbp.route('/google_login' , methods=['POST'])
@@ -99,7 +99,16 @@ def google_login():
   user_info = {'id': user.id, 'name': user.name, 'email': user.email, 'user_type': user.user_type}
   access_token = create_access_token(identity=user_info)
   refresh_token = create_refresh_token(identity=user_info)
-  return jsonify(access_token=access_token, refresh_token=refresh_token, user_id=user.id), 200
+  
+  target_token = Token.query.filter_by(user_id=user.id).first()
+  if target_token:
+    target_token.token = refresh_token
+  else:
+    new_token = Token(user_id=user.id, token=refresh_token)
+    db.session.add(new_token)
+  db.session.commit()
+  
+  return jsonify(access_token=access_token, user_id=user.id), 200
 
 @userbp.route('/refresh/token', methods=['POST'])
 def refresh_expired_token():
