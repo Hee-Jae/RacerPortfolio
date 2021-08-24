@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
-import { ContentsFormStyle } from 'portfolio/contents/ContentsStyle';
+import { ContentsFormStyle, ContentsFormInputStyle, ContentsRadioStyle } from 'portfolio/contents/ContentsStyle';
 import { BsTrash } from "react-icons/bs";
+
 const EduForm = (props) => {
 
   const [edu, setEdu] = useState(props.formName);
@@ -29,21 +30,17 @@ const EduForm = (props) => {
 
   return(
     <ContentsFormStyle>
-      <div>
-        <div>
+      <ContentsFormInputStyle>
           <input type="text" placeholder="학교" value={edu} onChange={e => setEdu(e.target.value)} />
-        </div>
-        <div>
           <input type="text" placeholder="전공" value={major} onChange={e => setMajor(e.target.value)} />
-        </div>
-        <div>
+        <ContentsRadioStyle>
           <label> <input name={props.formId} type="radio" value="재학" onChange={e => setType(e.target.value)} checked={type==="재학"}/> 재학 </label>
           <label> <input name={props.formId} type="radio" value="졸업" onChange={e => setType(e.target.value)} checked={type==="졸업"}/> 졸업 </label>
           <label> <input name={props.formId} type="radio" value="졸업예정" onChange={e => setType(e.target.value)} checked={type==="졸업예정"}/> 졸업예정 </label>
           <label> <input name={props.formId} type="radio" value="중퇴" onChange={e => setType(e.target.value)} checked={type==="중퇴"}/> 중퇴 </label>
-        </div>
-      </div>
-      <BsTrash size="26" onClick={deleteHandler}> 삭제 </BsTrash>
+        </ContentsRadioStyle>
+      </ContentsFormInputStyle>
+      <BsTrash size="30" onClick={deleteHandler}> 삭제 </BsTrash>
     </ContentsFormStyle>
   );
 };

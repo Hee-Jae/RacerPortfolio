@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
-import { ContentsFormStyle } from 'portfolio/contents/ContentsStyle';
+import { ContentsFormStyle, ContentsFormInputStyle } from 'portfolio/contents/ContentsStyle';
+import { BsTrash } from "react-icons/bs";
 
 const AwardForm = (props) => {
 
@@ -27,13 +28,11 @@ const AwardForm = (props) => {
 
   return(
     <ContentsFormStyle>
-      <div>
-        <input type="text" placeholder="상 이름" value={award} onChange={e => setAward(e.target.value)} />
-      </div>
-      <div>
-        <input type="text" placeholder="내용" value={description} onChange={e => setDescription(e.target.value)} />
-      </div>
-      <button onClick={deleteHandler}> 삭제 </button>
+        <ContentsFormInputStyle>
+          <input type="text" placeholder="상 이름" value={award} onChange={e => setAward(e.target.value)} />
+          <input type="text" placeholder="내용" value={description} onChange={e => setDescription(e.target.value)} />
+        </ContentsFormInputStyle>
+      <BsTrash size="30" onClick={deleteHandler}> 삭제 </BsTrash>
     </ContentsFormStyle>
   );
 };

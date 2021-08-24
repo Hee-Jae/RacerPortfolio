@@ -11,6 +11,8 @@ import { logout, refresh } from 'redux/action';
 import { useHistory } from 'react-router';
 import { projectDataValidation } from 'utils/validation';
 import { ContentsStyle, ContentsButtonWrapper} from 'portfolio/contents/ContentsStyle';
+import { BsPencilSquare, BsPlusSquare, BsCheckBox} from "react-icons/bs";
+import {CgCloseR} from "react-icons/cg";
 
 const Project = (props) => {
 
@@ -113,9 +115,9 @@ const Project = (props) => {
           })}
           
           <ContentsButtonWrapper>
-            <button onClick={editCompleteHandler}> 완료 </button>
-            <button onClick={editCancelHandler}> 취소 </button>
-            <button onClick={addProjectDataHandler}> 추가 </button>
+            <BsPlusSquare size="26" onClick={addProjectDataHandler}> 추가 </BsPlusSquare>
+            <BsCheckBox size="29" onClick={editCompleteHandler}> 완료 </BsCheckBox>
+            <CgCloseR size="29" onClick={editCancelHandler}> 취소 </CgCloseR>
           </ContentsButtonWrapper>
         </div> :
         <div>
@@ -130,7 +132,7 @@ const Project = (props) => {
             projectUrl={element.url} /> );
           })}
           <ContentsButtonWrapper>
-            {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
+            {user_id === props.userId && <BsPencilSquare size="26"  onClick={editTriggerHandler}> 수정 </BsPencilSquare>}
           </ContentsButtonWrapper>
         </div>
       }

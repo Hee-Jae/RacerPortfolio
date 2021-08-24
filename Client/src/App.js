@@ -14,6 +14,9 @@ function App() {
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <NavComponent />
+          <Route path="/" exact>
+            <Main />
+          </Route>
           <Route path="/main" exact>
             <Main />
           </Route>

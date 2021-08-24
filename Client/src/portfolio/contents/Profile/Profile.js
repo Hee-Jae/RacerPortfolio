@@ -7,7 +7,9 @@ import { useDispatch } from 'react-redux';
 import { logout, refresh } from 'redux/action';
 import { useHistory } from 'react-router';
 import { nameRegex } from 'utils/validation';
-import { ContentsStyle, ContentsButtonWrapper, ContentsFormStyle, ProfileInnerStyle } from 'portfolio/contents/ContentsStyle';
+import { ContentsStyle, ContentsButtonWrapper, ContentsFormStyle, ProfileInnerStyle, ContentsFormInputStyle } from 'portfolio/contents/ContentsStyle';
+import { BsPencilSquare, BsCheckBox} from "react-icons/bs";
+import {CgCloseR} from "react-icons/cg";
 
 const Profile = (props) => {
   
@@ -90,20 +92,17 @@ const Profile = (props) => {
         <div>
             <form onSubmit={submitHandler} encType="multipart/form-data">
               <ContentsFormStyle>
-                <div>
-                  <input type="file" placeholder="이미지" onChange={e => setImage(e.target.files[0])} />
-                </div>
-                <div>
-                  <input type="text" placeholder="이름" value={userName} onChange={e => setUserName(e.target.value)} />
-                </div>
-                <div>
-                  <input type="text" placeholder="한줄소개" value={description} onChange={e => setDescription(e.target.value)} />
-                </div>
+                  <ContentsFormInputStyle>
+                    <input type="file" placeholder="이미지" onChange={e => setImage(e.target.files[0])} />
+                    <input type="text" placeholder="이름" value={userName} onChange={e => setUserName(e.target.value)} />
+                    <input type="text" placeholder="한줄소개" value={description} onChange={e => setDescription(e.target.value)} />
+                  </ContentsFormInputStyle>
+                
               </ContentsFormStyle>
               
               <ContentsButtonWrapper>
-                <button type="submit"> 완료 </button>
-                <button onClick={editCancelHandler}> 취소 </button>
+                <BsCheckBox size="29" type="submit"> 완료 </BsCheckBox>
+                <CgCloseR size="29" onClick={editCancelHandler}> 취소 </CgCloseR>
               </ContentsButtonWrapper>
             </form>
           
@@ -117,7 +116,7 @@ const Profile = (props) => {
             <p> {profileData.description} </p>
           </ProfileInnerStyle>
           <ContentsButtonWrapper>
-            {user_id === props.userId && <button onClick={editTriggerHandler}> 수정 </button>}
+            {user_id === props.userId && <BsPencilSquare size="26" onClick={editTriggerHandler}> 수정 </BsPencilSquare>}
           </ContentsButtonWrapper>
         </div>
       }
