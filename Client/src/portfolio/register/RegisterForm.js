@@ -67,7 +67,7 @@ const RegisterForm = () => {
 
   return(
     <RegisterFormStyle>
-      <RegisterTitle> 레이서 포트폴리오 회원가입 </RegisterTitle>
+      <RegisterTitle> RACERIN SIGNUP </RegisterTitle>
       <div>
         <input type="text" value={email} onChange={e => setEmail(e.target.value)} placeholder="이메일"/>
         {(email !== '' && !validEmail) && <FlashMessage> 이메일 형식이 올바르지 않습니다. ex) abc@domain.com </FlashMessage>}

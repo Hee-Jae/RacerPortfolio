@@ -18,6 +18,7 @@ export const LoginButtonStyle = styled.div`
     grid-template-columns: 1fr;
     row-gap: 2rem;
     width: 90%;
+
     button{
     background-color: #524fa1;
     border: 1px solid #524fa1;
@@ -79,11 +80,12 @@ export const GoogleLoginStyle = styled.div`
   border-radius: 3px;
   cursor: pointer;
   :hover{
-    opacity: 0.7;
+      opacity: 0.7;
   }
 
   button{
     background-color: #524fa1 !important;
+    
   }
   
   span{
