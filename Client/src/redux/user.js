@@ -10,18 +10,22 @@ const user = (state = initState, action) => {
       return {
         ...state,
         access_token: action.access_token,
-        refresh_token: action.refresh_token,
         user_id: action.user_id,
-        isLoggedIn: action.isLoggedIn
+        isLogined: action.isLogined
       }
 
     case "LOGOUT":
       return {
         ...state,
         access_token: action.access_token,
-        refresh_token: action.refresh_token,
         user_id: action.user_id,
-        isLoggedIn: action.isLoggedIn
+        isLogined: action.isLogined
+      }
+
+    case "REFRESH":
+      return{
+        ...state,
+        access_token: action.access_token
       }
 
     default:

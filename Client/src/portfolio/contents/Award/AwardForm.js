@@ -1,26 +1,11 @@
 import React, {useState, useEffect} from "react";
-import styled from "styled-components";
-
-const AwardFormStyle = styled.div`
-  border: 1px solid green;
-  padding: 3px;
-  + div{
-    margin-top: 20px;
-  }
-`;
+import { ContentsFormStyle, ContentsFormInputStyle } from 'portfolio/contents/ContentsStyle';
+import { AiOutlineMinus } from "react-icons/ai";
 
 const AwardForm = (props) => {
 
   const [award, setAward] = useState(props.formName);
   const [description, setDescription] = useState(props.formDescription);
-
-  const changeNameHandler = (e) => {
-    setAward(e.target.value);
-  };
-
-  const changeDescriptionHandler = (e) => {
-    setDescription(e.target.value);
-  };
 
   useEffect(() => {
     const newAwardData = props.awardData.map(item => (item.id === props.formId ? 
@@ -42,15 +27,13 @@ const AwardForm = (props) => {
   };
 
   return(
-    <AwardFormStyle>
-      <div>
-        <input type="text" placeholder="상 이름" value={award} onChange={changeNameHandler} />
-      </div>
-      <div>
-        <input type="text" placeholder="내용" value={description} onChange={changeDescriptionHandler} />
-      </div>
-      <button onClick={deleteHandler}> 삭제 </button>
-    </AwardFormStyle>
+    <ContentsFormStyle>
+        <ContentsFormInputStyle>
+          <input type="text" placeholder="상 이름" value={award} onChange={e => setAward(e.target.value)} />
+          <input type="text" placeholder="내용" value={description} onChange={e => setDescription(e.target.value)} />
+        </ContentsFormInputStyle>
+      <AiOutlineMinus size="30" color="rgb(150, 150, 0)" title="삭제" onClick={deleteHandler}> </AiOutlineMinus>
+    </ContentsFormStyle>
   );
 };
 

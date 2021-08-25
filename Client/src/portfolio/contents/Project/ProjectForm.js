@@ -3,22 +3,8 @@ import styled from "styled-components";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
-
-const ProjectFormStyle = styled.div`
-  border: 1px solid green;
-  padding: 3px;
-  + div{
-    margin-top: 20px;
-  }
-`;
-
-const DatePickerStyle = styled.div`
-  display: inline-block;
-`;
-
-const InnerFormStyle = styled.div`
-  margin: 5px;
-`;
+import { ContentsFormStyle, ContentsFormInputStyle, DatePickerStyle } from 'portfolio/contents/ContentsStyle';
+import { AiOutlineMinus } from "react-icons/ai";
 
 const ProjectForm = (props) => {
 
@@ -27,26 +13,6 @@ const ProjectForm = (props) => {
   const [startdate, setStartdate] = useState(props.formStartdate);
   const [enddate, setEnddate] = useState(props.formEnddate);
   const [url, setUrl] = useState(props.formUrl);
-
-  const changeNameHandler = (e) => {
-    setProject(e.target.value);
-  };
-
-  const changeDescriptionHandler = (e) => {
-    setDescription(e.target.value);
-  };
-
-  const changeStartdateHandler = (date) => {
-    setStartdate(moment(date).format('YYYY-MM-DD'));
-  };
-
-  const changeEnddateHandler = (date) => {
-    setEnddate(moment(date).format('YYYY-MM-DD'));
-  };
-
-  const changeUrlHandler = (e) => {
-    setUrl(e.target.value);
-  };
 
   useEffect(() => {
     const newProjectData = props.projectData.map(item => (item.id === props.formId ? 
@@ -79,27 +45,22 @@ const ProjectForm = (props) => {
   }
 
   return(
-    <ProjectFormStyle>
-      <InnerFormStyle>
-        <input type="text" placeholder="프로젝트명" value={project} onChange={changeNameHandler} />
-      </InnerFormStyle>
-      <InnerFormStyle>
-        <input type="text" placeholder="프로젝트 내용" value={description} onChange={changeDescriptionHandler} />
-      </InnerFormStyle>
-      <InnerFormStyle>
-        <p>프로젝트 기간</p>
-        <DatePickerStyle>
-          <DatePicker dateFormat="yyyy-MM-dd" selected={formattedDate(startdate)} onChange={changeStartdateHandler} />
-        </DatePickerStyle> ~
-        <DatePickerStyle>
-          <DatePicker dateFormat="yyyy-MM-dd" selected={formattedDate(enddate)} onChange={changeEnddateHandler} />
-        </DatePickerStyle>
-      </InnerFormStyle>
-      <InnerFormStyle>
-        <input type="text" placeholder="프로젝트 주소" value={url} onChange={changeUrlHandler} />
-      </InnerFormStyle>
-      <button onClick={deleteHandler}> 삭제 </button>
-    </ProjectFormStyle>
+    <ContentsFormStyle>
+        <ContentsFormInputStyle>
+          <input type="text" placeholder="프로젝트명" value={project} onChange={e => setProject(e.target.value)} />
+          <input type="text" placeholder="프로젝트 내용" value={description} onChange={e => setDescription(e.target.value)} />
+          <div>
+            <DatePickerStyle>
+              <DatePicker dateFormat="yyyy-MM-dd" selected={formattedDate(startdate)} onChange={date => setStartdate(moment(date).format('YYYY-MM-DD'))} />
+            </DatePickerStyle> <span> ~ </span>
+            <DatePickerStyle>
+              <DatePicker dateFormat="yyyy-MM-dd" selected={formattedDate(enddate)} onChange={date => setEnddate(moment(date).format('YYYY-MM-DD'))} />
+            </DatePickerStyle>
+          </div>
+          <input type="text" placeholder="프로젝트 주소" value={url} onChange={e => setUrl(e.target.value)} />
+        </ContentsFormInputStyle>
+      <AiOutlineMinus size="30" color="rgb(150, 150, 0)" title="삭제" onClick={deleteHandler}> 삭제 </AiOutlineMinus>
+    </ContentsFormStyle>
   );
 };
 

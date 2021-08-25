@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { logout, refresh } from 'redux/action';
 import { MainStyle, MainContents, PortfolioStyle, ProfileStyle } from 'portfolio/MainStyle';
 
-const Main = () => {
+const Posts = () => {
 
   const access_token = useSelector((state) => state.user.access_token);
   const user_id = useSelector((state) => state.user.user_id);
@@ -16,6 +16,7 @@ const Main = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const postId = window.location.pathname.split("/").pop();
   const [isFetched, setIsFetched] = useState(false);
   const [portfolios, setPortfolios] = useState({
     userId: null,
@@ -31,7 +32,7 @@ const Main = () => {
       history.push('/login');
     } else {
       try {
-        const response = await axios.get(BACKEND_URL + `/posts?user=${user_id}`, header(access_token));
+        const response = await axios.get(BACKEND_URL + `/posts?user=${postId}`, header(access_token));
         const {user_id:userId, profile, edus, awards, projects, certificates} = response.data;
         setPortfolios({
           userId: userId,
@@ -44,11 +45,12 @@ const Main = () => {
         setIsFetched(true);
       } catch (error){
         if(error.response !== undefined && error.response.status === 401){
+          console.log("refreshing!");
           try{
             const refresh_response = await axios.post(BACKEND_URL + `/refresh/token`, {user_id: user_id});
             const new_token = refresh_response.data.access_token;
             dispatch(refresh(new_token));
-            const response = await axios.get(BACKEND_URL + `/posts?user=${user_id}`, header(new_token));
+            const response = await axios.get(BACKEND_URL + `/posts?user=${postId}`, header(new_token));
             const {user_id:userId, profile, edus, awards, projects, certificates} = response.data;
             setPortfolios({
               userId: userId,
@@ -91,10 +93,10 @@ const Main = () => {
             <Certificate certificateData={portfolios.certificateData} userId={portfolios.userId}/>
           </PortfolioStyle>
         </MainContents>:
-        <div style={{'textAlign':'center'}}> Loading... </div> 
+        <div> Loading... </div> 
       }
     </MainStyle>
   );
 }
 
-export default Main;
+export default Posts;

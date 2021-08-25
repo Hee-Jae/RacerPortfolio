@@ -1,5 +1,6 @@
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
 from models.award import Award
 from db_connect import db
 
@@ -10,16 +11,22 @@ awards = Blueprint('awards', __name__, url_prefix='/awards')
 def put_award():
   
   award_data = request.get_json()  
-  
   for award in award_data:
+    
+    name = award['name']
+    description = award['description']
+    user_id = award['user_id']
+    if not all([name, description, user_id]):
+      return jsonify(message = "invalid parameters"), 400
+    
     if award['id'] <= 0 :
-      newAward = Award(award['name'], award['description'], award['user_id'])
+      newAward = Award(name, description, user_id)
       db.session.add(newAward)
       db.session.commit()
     else: 
       target_award = Award.query.filter_by(id=award['id']).first()
-      target_award.name = award['name']
-      target_award.description = award['description']
+      target_award.name = name
+      target_award.description = description
       db.session.commit()
 
   user_info = get_jwt_identity()  

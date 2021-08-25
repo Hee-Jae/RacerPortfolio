@@ -1,5 +1,4 @@
 from sqlalchemy.orm import backref, relationship
-from datetime import datetime
 from db_connect import db
 
 class Project(db.Model):
