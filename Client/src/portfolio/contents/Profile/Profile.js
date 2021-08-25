@@ -19,6 +19,7 @@ const Profile = (props) => {
   const [userName, setUserName] = useState(props.profileData.name);
   const [image, setImage] = useState(props.profileData.image);
   const [description, setDescription] = useState(props.profileData.description);
+  const [imageHash, setImageHash] = useState(Date.now());
 
   const access_token = useSelector((state) => state.user.access_token);
   const user_id = useSelector((state) => state.user.user_id);
@@ -44,10 +45,9 @@ const Profile = (props) => {
     if(userName === '' || !nameRegex(userName)){
       alert("이름은 필수입니다. (20자 이내)");
     } else {
-      let fileToUpload = image;
       const formData = new FormData();
 
-      formData.append("image", fileToUpload);
+      formData.append("image", image);
       formData.append("name", userName);
       formData.append("description", description);
 
@@ -55,6 +55,7 @@ const Profile = (props) => {
         const response = await axios.post(BACKEND_URL + '/profiles', formData, header(access_token));
         setProfileData(response.data);
         setEdit(false);
+        setImageHash(Date.now());
       } catch (error){
         if(error.response !== undefined && error.response.status === 401){
           try{
@@ -90,7 +91,7 @@ const Profile = (props) => {
     <ContentsStyle>
       {edit ? 
         <div>
-            <form onSubmit={submitHandler} encType="multipart/form-data">
+            <form>
               <ContentsFormStyle>
                   <ContentsFormInputStyle>
                     <input type="file" placeholder="이미지" onChange={e => setImage(e.target.files[0])} />
@@ -101,7 +102,7 @@ const Profile = (props) => {
               </ContentsFormStyle>
               
               <ContentsButtonWrapper>
-                <BsCheckBox size="29" type="submit"> 완료 </BsCheckBox>
+                <BsCheckBox size="29" type="submit" onClick={submitHandler}> 완료 </BsCheckBox>
                 <CgCloseR size="29" onClick={editCancelHandler}> 취소 </CgCloseR>
               </ContentsButtonWrapper>
             </form>
@@ -111,7 +112,7 @@ const Profile = (props) => {
           <ProfileInnerStyle>
             {image === null ?
             <div> 프로필 사진이 없어요 </div> :
-            <img src={`data:image/png;base64,${profileData.image}`} width='100px' alt='프로필사진'/> }
+            <img src={`${profileData.image}?${imageHash}`} width='100px' alt='프로필사진'/> }
             <p> {profileData.name} </p>
             <p> {profileData.description} </p>
           </ProfileInnerStyle>

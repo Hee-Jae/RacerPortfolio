@@ -1,4 +1,4 @@
-from flask import request, jsonify, Blueprint, current_app
+from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required
 
 from models.edu import Edu
@@ -6,11 +6,6 @@ from models.certificate import Certificate
 from models.award import Award
 from models.user import User
 from models.project import Project
-
-from PIL import Image
-from base64 import b64encode
-from io import BytesIO
-import os
 
 posts = Blueprint('posts', __name__, url_prefix='/posts')
 
@@ -29,14 +24,6 @@ def get_portfolio():
   certificates = Certificate.query.filter_by(user_id = requested_id).all()
   profiles = User.query.filter_by(id = requested_id).first()
   
-  if profiles.image:
-    profile_image = Image.open(os.path.join(current_app.config['UPLOAD_DIR'], 'media', profiles.image))
-    buffered = BytesIO()
-    profile_image.save(buffered, format=profile_image.format)
-    profile_image_bytes = buffered.getvalue()
-    profile_image_base64 = b64encode(profile_image_bytes)
-    profile_image_str = profile_image_base64.decode('utf-8')
-  
   json_edus = [edu.as_dict() for edu in edus]
   json_awards = [award.as_dict() for award in awards]
   json_projects = [project.as_dict() for project in projects]
@@ -47,7 +34,7 @@ def get_portfolio():
     'profile': {
       'name': profiles.name,
       'description': profiles.description,
-      'image': profile_image_str if profiles.image else profiles.image
+      'image': profiles.image
     },
     'edus': json_edus,
     'awards': json_awards,
