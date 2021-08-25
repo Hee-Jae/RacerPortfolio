@@ -1,4 +1,3 @@
-from azure.storage.blob.models import ContentSettings
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from io import BytesIO
@@ -6,7 +5,7 @@ from json import dumps
 
 from models.user import User
 from utils.validation import validate_name
-from db_connect import db, azure_storage
+from db_connect import db, blob_service_client
 
 profiles = Blueprint('profiles', __name__, url_prefix='/profiles')
 
@@ -27,7 +26,9 @@ def put_profile():
   if 'image' in request.files:
     image_file = request.files['image'].read()
     image_stream = BytesIO(image_file)
-    azure_storage.block_blob_service.create_blob_from_stream(container_name='profile-image', blob_name=str(user_info['id']), stream=image_stream, content_settings=ContentSettings(content_type='image'))
+    container_client = blob_service_client.get_container_client('profile-image')
+    blob_client = container_client.get_blob_client(str(user_info['id']))
+    blob_client.upload_blob(image_stream, blob_type="BlockBlob", overwrite=True)
     image_name = 'https://racerportfolio.blob.core.windows.net/profile-image/' + str(user_info['id']) 
     target_profile.image = image_name
   

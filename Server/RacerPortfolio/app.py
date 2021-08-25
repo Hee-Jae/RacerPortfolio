@@ -15,8 +15,8 @@ from api.projects import projects
 from api.certificates import certificates
 from api.network import network
 
-from secret import SECRET_KEY, JWT_SECRET_KEY, STORAGE_NAME, STORAGE_KEY
-from db_connect import db, azure_storage
+from secret import SECRET_KEY, JWT_SECRET_KEY
+from db_connect import db
 import config
 
 
@@ -45,11 +45,8 @@ def create_app():
     app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = config.expires_access
     app.config['JWT_REFRESH_TOKEN_EXPIRES'] = config.expires_refresh
-    app.config['AZURE_STORAGE_ACCOUNT_NAME'] = STORAGE_NAME
-    app.config['AZURE_STORAGE_ACCOUNT_KEY'] = STORAGE_KEY
 
     jwt = JWTManager(app)
-    azure_storage.init_app(app)
     CORS(app)
         
     return app
