@@ -1,11 +1,12 @@
 from azure.storage.blob.models import ContentSettings
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from models.user import User
-from db_connect import db, azure_storage
 from io import BytesIO
 from json import dumps
+
+from models.user import User
 from utils.validation import validate_name
+from db_connect import db, azure_storage
 
 profiles = Blueprint('profiles', __name__, url_prefix='/profiles')
 

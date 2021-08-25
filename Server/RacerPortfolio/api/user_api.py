@@ -1,13 +1,13 @@
+import requests
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import create_refresh_token, create_access_token, jwt_required, get_jwt_identity
 from flask_jwt_extended.utils import decode_token
+from flask_bcrypt import Bcrypt
 
 from models.user import User
 from models.token import Token
 from db_connect import db
-from flask_bcrypt import Bcrypt
 from utils.validation import validate_email, validate_name, validate_password
-import requests
 
 userbp = Blueprint('userbp', __name__)
 bcrypt = Bcrypt()
