@@ -4,7 +4,9 @@ import { useHistory } from "react-router-dom";
 import {login} from "redux/action";
 import { BACKEND_URL } from "utils/env";
 import { pwRegex, emailRegex } from "utils/validation";
-import { LoginFormStyle, LoginTitle, LoginButtonStyle, InputStyle, FlashMessage } from "portfolio/login/LoginStyle";
+import { LoginFormStyle, LoginTitle, LoginButtonStyle, InputStyle, FlashMessage, GoogleLoginStyle } from "portfolio/login/LoginStyle";
+import {GoogleLogin} from 'react-google-login';
+import { google_oauth2_client_id } from 'portfolio/login/oauth2';
 import axios from 'axios';
 
 const LoginForm = () => {
@@ -33,15 +35,23 @@ const LoginForm = () => {
         setMessage('');
         history.push(`/main`);
       } catch(error){
-        console.log(error.response);
+        setMessage('이메일과 비밀번호를 다시 확인해주세요');
       }
     } else{
       setMessage('이메일과 비밀번호를 다시 확인해주세요');
     }
   };
 
-  const googleLoginHandler = () => {
-    history.push('/googlelogin');
+  const onSuccessHandler = async (response) => {
+    const token = response.tokenObj.id_token;
+    const loginRes = await axios.post(BACKEND_URL + '/google_login', {token: token});
+    
+    dispatch(login(loginRes.data.access_token, loginRes.data.user_id));
+    history.push('/main');
+  };
+
+  const onFailureHandler = (response) => {
+    history.push('/login');
   };
 
   useEffect(() => {
@@ -73,7 +83,16 @@ const LoginForm = () => {
       </InputStyle>
     <LoginButtonStyle>
       <button type="submit" onClick={loginHandler}> 로그인 </button>
-      <button onClick={googleLoginHandler}> 구글계정으로 로그인</button>
+      <GoogleLoginStyle>
+        <GoogleLogin
+          clientId = {google_oauth2_client_id}
+          buttonText="구글 계정으로 로그인"
+          prompt="select_account"
+          onSuccess={response => onSuccessHandler(response)}
+          onFailure={response => onFailureHandler(response)}
+          cookiePolicy={'single_host_origin'}
+        />
+      </GoogleLoginStyle>
     </LoginButtonStyle>
     </LoginFormStyle>
   );

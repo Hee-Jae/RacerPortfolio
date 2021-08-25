@@ -1,4 +1,4 @@
-import {NavComponent, Main, Network, Login, GoogleLoginComponent, Register, Posts} from 'portfolio/components';
+import {NavComponent, Main, Network, Login, Register, Posts} from 'portfolio/components';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {Provider} from "react-redux";
 import store from "redux/store";
@@ -28,9 +28,6 @@ function App() {
           </Route>
           <Route path="/login" exact>
             <Login />
-          </Route>
-          <Route path="/googlelogin">
-            <GoogleLoginComponent />
           </Route>
           <Route path="/register">
             <Register />
