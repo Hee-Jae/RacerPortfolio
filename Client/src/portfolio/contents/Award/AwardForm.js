@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { ContentsFormStyle, ContentsFormInputStyle } from 'portfolio/contents/ContentsStyle';
-import { BsTrash } from "react-icons/bs";
+import { AiOutlineMinus } from "react-icons/ai";
 
 const AwardForm = (props) => {
 
@@ -32,7 +32,7 @@ const AwardForm = (props) => {
           <input type="text" placeholder="상 이름" value={award} onChange={e => setAward(e.target.value)} />
           <input type="text" placeholder="내용" value={description} onChange={e => setDescription(e.target.value)} />
         </ContentsFormInputStyle>
-      <BsTrash size="30" onClick={deleteHandler}> 삭제 </BsTrash>
+      <AiOutlineMinus size="30" color="rgb(150, 150, 0)" title="삭제" onClick={deleteHandler}> </AiOutlineMinus>
     </ContentsFormStyle>
   );
 };

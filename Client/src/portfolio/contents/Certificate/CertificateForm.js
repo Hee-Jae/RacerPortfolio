@@ -3,8 +3,8 @@ import styled from "styled-components";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
-import { ContentsFormStyle, ContentsFormInputStyle } from 'portfolio/contents/ContentsStyle';
-import { BsTrash } from "react-icons/bs";
+import { ContentsFormStyle, ContentsFormInputStyle, DatePickerStyle } from 'portfolio/contents/ContentsStyle';
+import { AiOutlineMinus } from "react-icons/ai";;
 
 const CertificateForm = (props) => {
 
@@ -45,9 +45,11 @@ const CertificateForm = (props) => {
         <ContentsFormInputStyle>
           <input type="text" placeholder="자격증" value={certificate} onChange={e => setCertificate(e.target.value)} />
           <input type="text" placeholder="발급 기관" value={agency} onChange={e => setAgency(e.target.value)} />
-          <DatePicker dateFormat="yyyy-MM-dd" selected={formattedDate(date)} onChange={date => setDate(moment(date).format('YYYY-MM-DD'))} />
+          <DatePickerStyle>
+            <DatePicker dateFormat="yyyy-MM-dd" selected={formattedDate(date)} onChange={date => setDate(moment(date).format('YYYY-MM-DD'))} />
+          </DatePickerStyle>
         </ContentsFormInputStyle>
-      <BsTrash size="30" onClick={deleteHandler}> 삭제 </BsTrash>
+      <AiOutlineMinus size="30" color="rgb(150, 150, 0)" title="삭제" onClick={deleteHandler}> 삭제 </AiOutlineMinus>
     </ContentsFormStyle>
   );
 };

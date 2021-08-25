@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { ContentsFormStyle, ContentsFormInputStyle, ContentsRadioStyle } from 'portfolio/contents/ContentsStyle';
-import { BsTrash } from "react-icons/bs";
+import { AiOutlineMinus } from "react-icons/ai";
 
 const EduForm = (props) => {
 
@@ -40,7 +40,7 @@ const EduForm = (props) => {
           <label> <input name={props.formId} type="radio" value="중퇴" onChange={e => setType(e.target.value)} checked={type==="중퇴"}/> 중퇴 </label>
         </ContentsRadioStyle>
       </ContentsFormInputStyle>
-      <BsTrash size="30" onClick={deleteHandler}> 삭제 </BsTrash>
+      <AiOutlineMinus size="30" color="rgb(150, 150, 0)" title="삭제" onClick={deleteHandler}> 삭제 </AiOutlineMinus>
     </ContentsFormStyle>
   );
 };

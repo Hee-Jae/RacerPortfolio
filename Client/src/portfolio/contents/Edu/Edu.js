@@ -9,9 +9,9 @@ import { useDispatch } from 'react-redux';
 import { logout, refresh } from 'redux/action';
 import { useHistory } from 'react-router';
 import { eduDataValidation } from 'utils/validation';
-import { ContentsStyle, ContentsButtonWrapper} from 'portfolio/contents/ContentsStyle';
-import { BsPencilSquare, BsPlusSquare, BsCheckBox} from "react-icons/bs";
-import {CgCloseR} from "react-icons/cg";
+import { ContentsStyle, ContentsButtonWrapper, ContentsEditButtonWrapper } from 'portfolio/contents/ContentsStyle';
+import { BsPencilSquare} from "react-icons/bs";
+import { AiOutlinePlus, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 
 const Edu = (props) => {
   
@@ -87,7 +87,7 @@ const Edu = (props) => {
   
   return(
     <ContentsStyle>
-      <h2> 학력 </h2>
+      <h4> 학력 </h4>
       {edit ? 
         <div>
           {eduData.map(element => {
@@ -105,24 +105,24 @@ const Edu = (props) => {
           })}
           
           <ContentsButtonWrapper>
-            <BsPlusSquare size="26" onClick={addEduDataHandler}> 추가 </BsPlusSquare>
-            <BsCheckBox size="29" onClick={editCompleteHandler}> 완료 </BsCheckBox>
-            <CgCloseR size="29" onClick={editCancelHandler}> 취소 </CgCloseR>
+            <AiOutlinePlus size="30" color="rgb(0, 150, 255)" title="추가" onClick={addEduDataHandler}> </AiOutlinePlus>
+            <AiOutlineCheck size="30" color="rgb(0, 150, 0)" title="완료" onClick={editCompleteHandler}> </AiOutlineCheck>
+            <AiOutlineClose size="30" color="rgb(150, 0, 0)" title="취소" onClick={editCancelHandler}> </AiOutlineClose>
           </ContentsButtonWrapper>
         </div> :
-        <div>
-          {eduData.map(element => {
-            return(
-            <EduContents key={element.id}
-            eduId={element.id}
-            eduName={element.name} 
-            eduMajor={element.major}
-            eduType={element.edu_type} /> );
-          })}
-          <ContentsButtonWrapper>
-            {user_id === props.userId && <BsPencilSquare size="26" onClick={editTriggerHandler}> 수정 </BsPencilSquare>}
-          </ContentsButtonWrapper>
-        </div>
+          <div>
+            {eduData.map(element => {
+              return(
+              <EduContents key={element.id}
+              eduId={element.id}
+              eduName={element.name}
+              eduMajor={element.major}
+              eduType={element.edu_type} /> );
+            })}
+            <ContentsEditButtonWrapper>
+              {user_id === props.userId && <BsPencilSquare size="26" color="rgb(100, 100, 200)" onClick={editTriggerHandler}> 수정 </BsPencilSquare>}
+            </ContentsEditButtonWrapper>
+          </div>
       }
     </ContentsStyle>
   );

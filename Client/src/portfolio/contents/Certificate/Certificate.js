@@ -10,9 +10,9 @@ import { useDispatch } from 'react-redux';
 import { logout, refresh } from 'redux/action';
 import { useHistory } from 'react-router';
 import { certificateDataValidation } from 'utils/validation';
-import { ContentsStyle, ContentsButtonWrapper} from 'portfolio/contents/ContentsStyle';
-import { BsPencilSquare, BsPlusSquare, BsCheckBox} from "react-icons/bs";
-import {CgCloseR} from "react-icons/cg";
+import { ContentsStyle, ContentsButtonWrapper, ContentsEditButtonWrapper} from 'portfolio/contents/ContentsStyle';
+import { BsPencilSquare} from "react-icons/bs";
+import { AiOutlinePlus, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 
 const Certificate = (props) => {
 
@@ -94,7 +94,7 @@ const Certificate = (props) => {
   
   return(
     <ContentsStyle>
-      <h2> 자격증 </h2>
+      <h4> 자격증 </h4>
       {edit ? 
         <div>
           {certificateData.map(element => {
@@ -112,9 +112,9 @@ const Certificate = (props) => {
           })}
           
           <ContentsButtonWrapper>
-            <BsPlusSquare size="26" onClick={addCertificateDataHandler}> 추가 </BsPlusSquare>
-            <BsCheckBox size="29" onClick={editCompleteHandler}> 완료 </BsCheckBox>
-            <CgCloseR size="29" onClick={editCancelHandler}> 취소 </CgCloseR>
+            <AiOutlinePlus size="30" color="rgb(0, 150, 255)" title="추가" onClick={addCertificateDataHandler}> </AiOutlinePlus>
+            <AiOutlineCheck size="30" color="rgb(0, 150, 0)" title="완료" onClick={editCompleteHandler}> </AiOutlineCheck>
+            <AiOutlineClose size="30" color="rgb(150, 0, 0)" title="취소" onClick={editCancelHandler}> </AiOutlineClose>
           </ContentsButtonWrapper>
         </div> :
         <div>
@@ -126,9 +126,9 @@ const Certificate = (props) => {
             certificateAgency={element.agency}
             certificateDate={element.date} /> );
           })}
-          <ContentsButtonWrapper>
-          {user_id === props.userId && <BsPencilSquare size="26" onClick={editTriggerHandler}> 수정 </BsPencilSquare>}
-          </ContentsButtonWrapper>
+          <ContentsEditButtonWrapper>
+          {user_id === props.userId && <BsPencilSquare size="26" color="rgb(100, 100, 200)" onClick={editTriggerHandler}> 수정 </BsPencilSquare>}
+          </ContentsEditButtonWrapper>
         </div>
       }
     </ContentsStyle>

@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import { ContentsFormStyle, ContentsFormInputStyle, DatePickerStyle } from 'portfolio/contents/ContentsStyle';
-import { BsTrash } from "react-icons/bs";
+import { AiOutlineMinus } from "react-icons/ai";
 
 const ProjectForm = (props) => {
 
@@ -52,14 +52,14 @@ const ProjectForm = (props) => {
           <div>
             <DatePickerStyle>
               <DatePicker dateFormat="yyyy-MM-dd" selected={formattedDate(startdate)} onChange={date => setStartdate(moment(date).format('YYYY-MM-DD'))} />
-            </DatePickerStyle> ~ 
+            </DatePickerStyle> <span> ~ </span>
             <DatePickerStyle>
               <DatePicker dateFormat="yyyy-MM-dd" selected={formattedDate(enddate)} onChange={date => setEnddate(moment(date).format('YYYY-MM-DD'))} />
             </DatePickerStyle>
           </div>
           <input type="text" placeholder="프로젝트 주소" value={url} onChange={e => setUrl(e.target.value)} />
         </ContentsFormInputStyle>
-      <BsTrash size="30" onClick={deleteHandler}> 삭제 </BsTrash>
+      <AiOutlineMinus size="30" color="rgb(150, 150, 0)" title="삭제" onClick={deleteHandler}> 삭제 </AiOutlineMinus>
     </ContentsFormStyle>
   );
 };

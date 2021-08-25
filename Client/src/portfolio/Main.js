@@ -91,7 +91,7 @@ const Main = () => {
             <Certificate certificateData={portfolios.certificateData} userId={portfolios.userId}/>
           </PortfolioStyle>
         </MainContents>:
-        <div> Loading... </div> 
+        <div style={{'textAlign':'center'}}> Loading... </div> 
       }
     </MainStyle>
   );
