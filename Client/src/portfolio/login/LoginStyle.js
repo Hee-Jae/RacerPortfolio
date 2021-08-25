@@ -26,6 +26,10 @@ export const LoginButtonStyle = styled.div`
     padding: 0 1.5rem;
     border-radius: 3px;
     cursor: pointer;
+
+    :hover{
+      opacity: 0.7;
+    }
   }
 `;
 
@@ -68,27 +72,27 @@ export const FlashMessage = styled.p`
 `;
 
 export const GoogleLoginStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  min-height: 500px;
-  margin: 0 auto;
-
-  div{
-    width: 40%;
-    border-right: 1px solid rgb(255, 255, 255);
-    height: 40%;
-    align-items: center;
+  background-color: #524fa1;
+  border: 1px solid #524fa1;
+  color: #fff;
+  line-height: 1.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  :hover{
+    opacity: 0.7;
   }
 
   button{
-    display: grid;
-    grid-template-columns: 1fr;
-    height: 10em;
-    span{
-      font-size: 1.5rem;
-      align-items: center;
-      color: #524fa1;;
-    }
+    background-color: #524fa1 !important;
+  }
+  
+  span{
+    color: white;
+    font-size: 1.2rem;
+    font-family: 'Montserrat','Noto Sans KR', sans-serif !important;
+  }
+
+  div{
+    background-color: #524fa1 !important;
   }
 `;

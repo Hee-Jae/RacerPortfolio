@@ -34,6 +34,7 @@ export const ContentsFormStyle = styled.div`
   }
   
   svg{
+
     margin-top: 8rem;
     cursor: pointer;
   }

@@ -27,12 +27,12 @@ const NavComponent = (props) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-            <Link to="/main" className="nav-link">메인</Link>
-            <Link to="/network" className="nav-link">네트워크</Link>
             {isLogin ?
-            (<Link to="/login" className="nav-link" onClick={logoutHandler}>로그아웃</Link>) :
-            (<><Link to="/login" className="nav-link">로그인</Link>
-              <Link to="/register" className="nav-link">회원가입</Link></>)}
+            <><Link to="/main" className="nav-link">메인</Link>
+            <Link to="/network" className="nav-link">네트워크</Link>
+            <Link to="/login" className="nav-link" onClick={logoutHandler}>로그아웃</Link></> :
+            <><Link to="/login" className="nav-link">로그인</Link>
+              <Link to="/register" className="nav-link">회원가입</Link></>}
             </Nav>
           </Navbar.Collapse>
         </Container>
