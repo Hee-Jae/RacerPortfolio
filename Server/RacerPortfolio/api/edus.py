@@ -1,5 +1,6 @@
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
 from models.edu import Edu
 from db_connect import db
 
