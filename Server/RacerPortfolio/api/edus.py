@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.edu import Edu
 from db_connect import db
 
-edus = Blueprint('edus', __name__, url_prefix='/edus')
+edus = Blueprint('edus', __name__, url_prefix='/api/edus')
 
 @edus.route('', methods=['PUT'])
 @jwt_required()

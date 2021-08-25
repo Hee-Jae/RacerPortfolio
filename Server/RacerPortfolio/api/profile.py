@@ -7,7 +7,7 @@ from models.user import User
 from utils.validation import validate_name
 from db_connect import db, blob_service_client
 
-profiles = Blueprint('profiles', __name__, url_prefix='/profiles')
+profiles = Blueprint('profiles', __name__, url_prefix='/api/profiles')
 
 @profiles.route('', methods=['POST'])
 @jwt_required()

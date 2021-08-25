@@ -9,7 +9,7 @@ from models.token import Token
 from db_connect import db
 from utils.validation import validate_email, validate_name, validate_password
 
-userbp = Blueprint('userbp', __name__)
+userbp = Blueprint('userbp', __name__, url_prefix='/api')
 bcrypt = Bcrypt()
 
 @userbp.route('/network', methods=["POST"])

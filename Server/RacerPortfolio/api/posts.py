@@ -7,7 +7,7 @@ from models.award import Award
 from models.user import User
 from models.project import Project
 
-posts = Blueprint('posts', __name__, url_prefix='/posts')
+posts = Blueprint('posts', __name__, url_prefix='/api/posts')
 
 @posts.route('', methods=['GET'])
 @jwt_required()
