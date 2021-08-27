@@ -95,7 +95,7 @@ const Profile = (props) => {
               <ProfileFormStyle>
                   <ProfileFormInputStyle>
                     <label for="file-input">
-                      {image === null ? <img src={props.profileData.image} /> : <img src={URL.createObjectURL(image)} />}
+                      {image === null ? <img src={`${props.profileData.image}?${imageHash}`} /> : <img src={URL.createObjectURL(image)} />}
                     </label>
                     <input type="file" id="file-input" accept="image/*" placeholder="이미지" onChange={e => setImage(e.target.files[0])} />
                     <input type="text" placeholder="이름" value={userName} onChange={e => setUserName(e.target.value)} />
