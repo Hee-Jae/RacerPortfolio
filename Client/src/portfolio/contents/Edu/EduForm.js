@@ -34,10 +34,10 @@ const EduForm = (props) => {
           <input type="text" placeholder="학교" value={edu} onChange={e => setEdu(e.target.value)} />
           <input type="text" placeholder="전공" value={major} onChange={e => setMajor(e.target.value)} />
         <ContentsRadioStyle>
-          <label> <input name={props.formId} type="radio" value="재학" onChange={e => setType(e.target.value)} checked={type==="재학"}/> 재학 </label>
-          <label> <input name={props.formId} type="radio" value="졸업" onChange={e => setType(e.target.value)} checked={type==="졸업"}/> 졸업 </label>
-          <label> <input name={props.formId} type="radio" value="졸업예정" onChange={e => setType(e.target.value)} checked={type==="졸업예정"}/> 졸업예정 </label>
-          <label> <input name={props.formId} type="radio" value="중퇴" onChange={e => setType(e.target.value)} checked={type==="중퇴"}/> 중퇴 </label>
+          <label> <input name={props.formId} type="radio" value="재학중" onChange={e => setType(e.target.value)} checked={type==="재학중"}/> 재학중 </label>
+          <label> <input name={props.formId} type="radio" value="학사졸업" onChange={e => setType(e.target.value)} checked={type==="학사졸업"}/> 학사졸업 </label>
+          <label> <input name={props.formId} type="radio" value="석사졸업" onChange={e => setType(e.target.value)} checked={type==="석사졸업"}/> 석사졸업 </label>
+          <label> <input name={props.formId} type="radio" value="박사졸업" onChange={e => setType(e.target.value)} checked={type==="박사졸업"}/> 박사졸업 </label>
         </ContentsRadioStyle>
       </ContentsFormInputStyle>
       <AiOutlineMinus size="30" color="rgb(150, 150, 0)" title="삭제" onClick={deleteHandler}> 삭제 </AiOutlineMinus>
