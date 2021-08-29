@@ -8,6 +8,7 @@ from models.user import User
 from models.token import Token
 from db_connect import db
 from utils.validation import validate_email, validate_name, validate_password
+from secret import STORAGE_URL
 
 userbp = Blueprint('userbp', __name__, url_prefix='/api')
 bcrypt = Bcrypt()
@@ -46,7 +47,7 @@ def register():
     return jsonify(message = "already exist"), 400
 
   hashed_password = bcrypt.generate_password_hash(password).decode()
-  new_user = User(email=email, password=hashed_password, name=name, user_type=user_type)
+  new_user = User(email=email, password=hashed_password, name=name, description=" " ,image=STORAGE_URL+'defaultimage.png', user_type=user_type)
   db.session.add(new_user)
   db.session.commit()
   
@@ -105,7 +106,7 @@ def google_login():
   
   user = User.query.filter_by(email=email, user_type=user_type).first()
   if not user:
-    new_user = User(email=email, password='google', name=name, user_type=user_type)
+    new_user = User(email=email, password='google', name=name, description=" " ,image=STORAGE_URL+'defaultimage.png',user_type=user_type)
     db.session.add(new_user)
     db.session.commit()
     

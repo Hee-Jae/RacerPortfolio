@@ -17,7 +17,8 @@ const Profile = (props) => {
   const [profileData, setProfileData] = useState(props.profileData);
   const [copyProfileData, setCopyProfileData] = useState(props.profileData);
   const [userName, setUserName] = useState(props.profileData.name);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(props.profileData.image);
+  const [newImage, setNewImage] = useState(null);
   const [description, setDescription] = useState(props.profileData.description);
   const [imageHash, setImageHash] = useState(Date.now());
 
@@ -38,6 +39,7 @@ const Profile = (props) => {
     setProfileData(copyProfileData);
     setEdit(false);
     setImage(null);
+    setNewImage(null);
   };
 
   const submitHandler = async (e) => {
@@ -95,9 +97,9 @@ const Profile = (props) => {
               <ProfileFormStyle>
                   <ProfileFormInputStyle>
                     <label for="file-input">
-                      {image === null ? <img src={`${props.profileData.image}?${imageHash}`} /> : <img src={URL.createObjectURL(image)} />}
+                      {newImage === null ? <img src={`${props.profileData.image}?${imageHash}`} /> : <img src={URL.createObjectURL(newImage)} />}
                     </label>
-                    <input type="file" id="file-input" accept="image/*" placeholder="이미지" onChange={e => setImage(e.target.files[0])} />
+                    <input type="file" id="file-input" accept="image/*" placeholder="이미지" onChange={e => {setImage(e.target.files[0]); setNewImage(e.target.files[0]);}} />
                     <input type="text" placeholder="이름" value={userName} onChange={e => setUserName(e.target.value)} />
                     <input type="text" placeholder="한줄소개" value={description} onChange={e => setDescription(e.target.value)} />
                   </ProfileFormInputStyle>
@@ -109,9 +111,7 @@ const Profile = (props) => {
               </ProfileButtonWrapper>
         </ProfileInnerStyle> :
         <ProfileInnerStyle>
-            {props.profileData.image === null ?
-            <img src='https://racerportfolio.blob.core.windows.net/profile-image/defaultimage.png' alt='프로필사진'/> :
-            <img src={`${props.profileData.image}?${imageHash}`} alt='프로필사진'/> }
+            <img src={`${props.profileData.image}?${imageHash}`} alt='프로필사진'/>
             <p style={{'fontSize':'1.3rem', 'textAlign':'center'}}> {profileData.name} </p>
             <p style={{'paddingLeft':'1rem', 'paddingRight':'1rem'}}> {profileData.description} </p>
           <ContentsButtonWrapper>

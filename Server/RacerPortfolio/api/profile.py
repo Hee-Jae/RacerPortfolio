@@ -6,6 +6,7 @@ from json import dumps
 from models.user import User
 from utils.validation import validate_name
 from db_connect import db, blob_service_client
+from secret import STORAGE_URL
 
 profiles = Blueprint('profiles', __name__, url_prefix='/api/profiles')
 
@@ -29,7 +30,7 @@ def put_profile():
     container_client = blob_service_client.get_container_client('profile-image')
     blob_client = container_client.get_blob_client(str(user_info['id']))
     blob_client.upload_blob(image_stream, blob_type="BlockBlob", overwrite=True)
-    image_name = 'https://racerportfolio.blob.core.windows.net/profile-image/' + str(user_info['id']) 
+    image_name = STORAGE_URL + str(user_info['id']) 
     target_profile.image = image_name
   
   target_profile.name = request.form['name']

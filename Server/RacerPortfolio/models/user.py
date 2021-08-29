@@ -12,11 +12,13 @@ class User(db.Model):
   image       = db.Column(db.String(256))
   user_type        = db.Column(db.Integer, nullable=False)
 
-  def __init__(self, email, password, name, user_type):
+  def __init__(self, email, password, name, image, description ,user_type):
     self.email      = email
     self.password   = password
     self.name       = name
-    self.user_type       = user_type
+    self.description = description  
+    self.image      = image
+    self.user_type  = user_type
 
   def as_dict(self):
     return {c.name: getattr(self, c.name) for c in self.__table__.columns if (c.name not in ['email', 'password', 'user_type'])}
