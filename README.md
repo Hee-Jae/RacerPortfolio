@@ -20,6 +20,8 @@
 <img src="https://img.shields.io/badge/Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white"/>
 </div>
 
+### URL (배포 준비중)
+
 ---
 ### 디렉토리 구조
 ##### Client
@@ -94,3 +96,29 @@ RacerPortfolio
 
 ---
 ### 둘러보기
+
+<details>
+    <summary> 로그인 </summary>
+    <img src=https://user-images.githubusercontent.com/22339356/132104178-32a419f2-1c30-4c7b-81ad-4281b956a453.png width="800">
+</details>
+
+<details>
+    <summary> 회원가입 </summary>
+    <img src=https://user-images.githubusercontent.com/22339356/132104183-3ad8fe1a-971c-4166-bbbb-803d4ba42adc.png width="800">
+</details>
+
+<details>
+    <summary> 메인 페이지 </summary>
+    <img src=https://user-images.githubusercontent.com/22339356/132104180-0a926752-ac3a-4eb4-b547-5304311926ad.png width="800">
+</details>
+
+<details>
+    <summary> 포트폴리오 작성 </summary>
+    <img src=https://user-images.githubusercontent.com/22339356/132104182-014a8a39-fbe2-41d4-bda5-8e23a7b64890.png width="800">
+</details>
+
+<details>
+    <summary> 유저 검색 </summary>
+    <img src=https://user-images.githubusercontent.com/22339356/132104176-ffdc0392-41fe-4932-b72e-0ce15155a59d.png width="800">
+</details>
+
