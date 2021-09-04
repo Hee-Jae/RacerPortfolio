@@ -23,6 +23,7 @@
 ### URL (배포 준비중)
 
 ---
+
 ### 디렉토리 구조
 ##### Client
 ```
@@ -88,6 +89,8 @@ RacerPortfolio
        validation.py      # Validation 코드
 ```
 
+<br/>
+
 ### 프로젝트 실행
 - **클라이언트**
 `/Client yarn start`
@@ -95,6 +98,7 @@ RacerPortfolio
 `/Server/RacerPortfolio python3 app.py`
 
 ---
+
 ### 둘러보기
 
 <details>
@@ -122,3 +126,12 @@ RacerPortfolio
     <img src=https://user-images.githubusercontent.com/22339356/132104176-ffdc0392-41fe-4932-b72e-0ce15155a59d.png width="800">
 </details>
 
+---
+
+### 무엇을 배웠는가?
+
+- [OAuth2란 무엇인가?](https://hee-jae.tistory.com/6?category=882483)
+- [클라우드 스토리지는 무엇인가?](https://hee-jae.tistory.com/5?category=882483)
+- [Bcrypt를 사용하는 이유](https://hee-jae.tistory.com/4?category=882483)
+- [Refresh Token 관리 방법에 대해](https://hee-jae.tistory.com/3?category=882483)
+- [단일 도메인에 배포해보기](https://hee-jae.tistory.com/2?category=882483)
