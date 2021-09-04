@@ -89,7 +89,7 @@ RacerPortfolio
 ### 프로젝트 실행
 - **클라이언트**
 `/Client yarn start`
-- **서버 **
+- **서버**
 `/Server/RacerPortfolio python3 app.py`
 
 ---
