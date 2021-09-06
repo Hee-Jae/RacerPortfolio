@@ -2,6 +2,7 @@
 
 ### 주제 : 레이서 포트폴리오 웹 서비스
 ### 기간 : 2021. 08 16 ~ 2021. 08. 27 (2주)
+### URL : http://racer-portfolio.koreasouth.cloudapp.azure.com/
 ### 기술 스택
 <div align="center">
 
@@ -19,8 +20,6 @@
 
 <img src="https://img.shields.io/badge/Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white"/>
 </div>
-
-### URL (배포 준비중)
 
 ---
 
