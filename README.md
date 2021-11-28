@@ -2,7 +2,7 @@
 
 ### 주제 : 레이서 포트폴리오 웹 서비스
 ### 기간 : 2021. 08 16 ~ 2021. 08. 27 (2주)
-### URL : http://racer-portfolio.koreasouth.cloudapp.azure.com/
+### URL : 무료 클라우드 계정 기한 만료로 인해 추후 재배포..
 ### 기술 스택
 <div align="center">
 
